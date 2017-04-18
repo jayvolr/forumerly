@@ -1,5 +1,5 @@
 {
-  "name": "mongodb-test",
+  "name": "forumerly",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -8,6 +8,7 @@
   },
   "keywords": [],
   "author": "",
+  "repository": "https://github.com/jonlove/forumerly.git",
   "license": "ISC",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
