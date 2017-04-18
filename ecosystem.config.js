@@ -26,7 +26,7 @@ module.exports = {
       user : 'root',
       host : '162.243.197.96',
       ref  : 'origin/master',
-      repo : 'https://github.com/jonlove/forumerly.git',
+      repo : 'https://github.com/jayvolr/forumerly.git',
       path : '~/forumerly',
       'post-deploy' : 'nvm install && npm install && /root/.nvm/versions/node/v7.9.0/bin/pm2 reload ecosystem.config.js --env production && pm2 startOrRestart ecosystem.config.js'
     },
