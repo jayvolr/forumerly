@@ -2,8 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
-const forumerlyRoutes = require('./routes/forumerly')
-const aboutRoutes = require('./routes/about');
+const authRoutes = require('./routes/auth');
 
 express()
   .set('view engine', 'hjs')
@@ -19,8 +18,7 @@ express()
   .get('/', (req, res) => {
     res.render('home')
   })
-  .use('/about', aboutRoutes)
-  .use('/forumerly', forumerlyRoutes)
+  .use(authRoutes)
   .listen('3000', () => {
     console.log('Server now listening on port 3000...')
   })

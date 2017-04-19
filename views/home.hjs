@@ -2,62 +2,56 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Jon Love</title>
+    <title>Forumerly</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="css/bioPage.css" rel="stylesheet">
+    <link href="css/forumerly.css" rel="stylesheet">
   </head>
   <body>
-
-    <div class="jumbotron" style="background-image: url('/images/CircuitBoard.png'); color: #fff">
-      <div class="container">
-        <h1>Jon Love,</h1>
-        <p>Backend Web Developer</p>
-        <p><a class="btn btn-default btn-lg" href="#aboutme" role="button">About me <span class="glyphicon glyphicon-menu-down"></span></a> <a class="btn btn-primary btn-lg" href="#projects" role="button">My work <span class="glyphicon glyphicon-menu-down"></span></a></p>
-      </div>
-    </div>
-
     <div class="container">
-      <section id="aboutme">
-        <h2>About me</h2>
-        <hr>
-        <blockquote style="margin: 40px; margin-bottom: 70px">
-          Hey! I'm Jon Love and I build applications for the modern web. Growing up around the Charlotte, NC area, I discovered my love for all things technology early on. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse iaculis lectus ut blandit euismod. Fusce faucibus interdum justo in ultricies. Nunc sit amet tincidunt nulla. Suspendisse potenti. <br><br>Donec interdum ullamcorper orci, eget facilisis purus varius in. Nullam lacus diam, aliquet consequat turpis nec, sodales blandit magna. Donec eget elit felis. Pellentesque faucibus ut felis eu suscipit. Suspendisse non elit odio. Nulla eu odio vel dui mattis accumsan. In luctus justo lorem.
-        </blockquote>
-      </section>
+      <h1><a id="logoLink" href="/"><span id="logoTrick">Forum</span>erly </a><small>A basic, open source, internet forum application.</small></h1>
+      <hr>
+
+      <form action="/signup" method="post" class="col-sm-6">
+        <h1>Signup</h1>
+        <div class="form-group">
+          <label>Email address</label>
+          <input type="email" class="form-control" name="email" placeholder="Email">
+        </div>
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" class="form-control" name="username" placeholder="Username">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" class="form-control" name="password" placeholder="Password">
+        </div>
+        <div class="form-group">
+          <label>Password (repeat)</label>
+          <input type="password" class="form-control" name="password2" placeholder="Password (repeat)">
+        </div>
+        <button type="submit" class="form-control btn-primary">Signup</button>
+      </form>
+
+      <form action="/login" method="post" class="col-sm-6">
+        <h1>Login</h1>
+        <div class="form-group">
+          <label>Username or Email</label>
+          <input type="text" class="form-control" name="username" placeholder="Username or Email">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" class="form-control" name="password" placeholder="Password">
+        </div>
+        <button type="submit" class="form-control btn-default">Login</button>
+      </form>
     </div>
 
-    <div class="container">
-      <section id="projects">
-        <h2>Things I've made</h1>
-        <hr>
-
-        <div class="jumbotron" style="margin-bottom: 0px">
-          <div class="container">
-            <h1>Forumerly<span class="badge">In-dev</span></h1>
-            <p>A basic internet forum application.</p>
-            <p><a class="btn btn-default btn-lg" href="/about/forumerly" role="button">About project</a> <a class="btn btn-info btn-lg" href="/forumerly" target="_blank" role="button">View app <span class="glyphicon glyphicon-new-window"></span></a></p>
-          </div>
+      <footer class="footer">
+        <div class="container">
+          <hr>
+          <p class="text-muted">Made by <a href="http://jayvolr.me/">Jon Love</a> - <a href="https://github.com/jayvolr">GitHub</a> | <a href="https://twitter.com/jayvolr">Twitter</a> | <a href="https://www.linkedin.com/in/jonlov4/">Linkedin</a></p>
         </div>
-
-        <br>
-
-        <div class="jumbotron fadeGradient" style="margin-bottom: 0px">
-          <div class="container">
-            <h1>CharlieBot<span class="badge"></span></h1>
-            <p>A fun chatbot for Discord!</p>
-            <p><a class="btn btn-default btn-lg" href="/about/charliebot" role="button">About project</a> <a class="btn btn-info btn-lg" href="https://github.com/jayvolr/CharlieBot" target="_blank" role="button">View code <span class="glyphicon glyphicon-new-window"></span></a></p>
-          </div>
-        </div>
-
-      </section>
-    </div>
-
-    <footer class="footer">
-      <div class="container">
-        <hr>
-        <p class="text-muted">Made by <a href="/">Jon Love</a> - <a href="https://github.com/jayvolr">GitHub</a> | <a href="https://twitter.com/jayvolr">Twitter</a> | <a href="https://www.linkedin.com/in/jonlov4/">Linkedin</a></p>
-      </div>
-    </footer>
+      </footer>
 
   </body>
 </html>
