@@ -5,7 +5,7 @@ const authRoutes = require('./auth');
 
 router
   .get('/', (req, res) => {
-    res.render('forumerly/home')
+    res.render('forumerly/home')  
   })
   .use(authRoutes)
 

@@ -1,0 +1,10 @@
+#logoTrick:hover {
+  border-bottom: dotted;
+  color: #777;
+
+}
+
+#logoLink:hover {
+  text-decoration: none;
+  color: #337ab7;
+}

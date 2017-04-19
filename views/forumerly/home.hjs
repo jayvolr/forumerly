@@ -1,1 +1,57 @@
-<h1>A basic, open source, internet forum application.</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Forumerly</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="css/forumerly.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <h1><a id="logoLink" href="/forumerly"><span id="logoTrick">Forum</span>erly </a><small>A basic, open source, internet forum application.</small></h1>
+      <hr>
+
+      <form action="/forumerly/signup" method="post" class="col-sm-6">
+        <h1>Signup</h1>
+        <div class="form-group">
+          <label>Email address</label>
+          <input type="email" class="form-control" name="email" placeholder="Email">
+        </div>
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" class="form-control" name="username" placeholder="Username">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" class="form-control" name="password" placeholder="Password">
+        </div>
+        <div class="form-group">
+          <label>Password (repeat)</label>
+          <input type="password" class="form-control" name="password2" placeholder="Password (repeat)">
+        </div>
+        <button type="submit" class="form-control btn-primary">Signup</button>
+      </form>
+
+      <form action="/forumerly/login" method="post" class="col-sm-6">
+        <h1>Login</h1>
+        <div class="form-group">
+          <label>Username or Email</label>
+          <input type="text" class="form-control" name="username" placeholder="Username or Email">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" class="form-control" name="password" placeholder="Password">
+        </div>
+        <button type="submit" class="form-control btn-default">Login</button>
+      </form>
+    </div>
+
+      <footer class="footer">
+        <div class="container">
+          <hr>
+          <p class="text-muted">Made by <a href="/">Jon Love</a> - <a href="https://github.com/jayvolr">GitHub</a> | <a href="https://twitter.com/jayvolr">Twitter</a> | <a href="https://www.linkedin.com/in/jonlov4/">Linkedin</a></p>
+        </div>
+      </footer>
+
+  </body>
+</html>

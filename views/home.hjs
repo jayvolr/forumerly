@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <title>Jon Love</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="forumerly.css" rel="stylesheet">
+    <link href="css/bioPage.css" rel="stylesheet">
   </head>
   <body>
 
-    <div class="jumbotron" style="background-color: #4598ff; color: #fff">
+    <div class="jumbotron" style="background-image: url('/images/CircuitBoard.png'); color: #fff">
       <div class="container">
         <h1>Jon Love,</h1>
         <p>Backend Web Developer</p>
@@ -42,7 +42,8 @@
 
     <footer class="footer">
       <div class="container">
-        <p class="text-muted">Jon Love - <a href="https://github.com/jayvolr">GitHub</a> | <a href="https://twitter.com/jayvolr">Twitter</a> | <a href="https://www.linkedin.com/in/jonlov4/">Linkedin</a></p>
+        <hr>
+        <p class="text-muted">Made by <a href="/">Jon Love</a> - <a href="https://github.com/jayvolr">GitHub</a> | <a href="https://twitter.com/jayvolr">Twitter</a> | <a href="https://www.linkedin.com/in/jonlov4/">Linkedin</a></p>
       </div>
     </footer>
 
