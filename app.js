@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 const forumerlyRoutes = require('./routes/forumerly')
+const aboutRoutes = require('./routes/about');
 
 express()
   .set('view engine', 'hjs')
@@ -18,10 +19,7 @@ express()
   .get('/', (req, res) => {
     res.render('home')
   })
-  .get('/about/:app', (req, res) => {
-    var app = req.params.app
-    res.render('about', {"app": app})
-  })
+  .use('/about', aboutRoutes)
   .use('/forumerly', forumerlyRoutes)
   .listen('3000', () => {
     console.log('Server now listening on port 3000...')

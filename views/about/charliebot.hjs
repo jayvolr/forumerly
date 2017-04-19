@@ -2,17 +2,16 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>About Forumerly</title>
+    <title>About CharlieBot</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="forumerly.css" rel="stylesheet">
   </head>
   <body>
 
     <div class="jumbotron" style="background-color: #4598ff; color: #fff">
       <div class="container">
-        <h1>Forumerly<span class="badge">In-dev</span></h1>
-        <p>A basic, open source, internet forum application.</p>
-        <p><a class="btn btn-default btn-lg" href="/#projects" role="button"><span class="glyphicon glyphicon-arrow-left"></span> Back</a> <a class="btn btn-primary btn-lg" href="/forumerly" target="_blank" role="button">View app <span class="glyphicon glyphicon-new-window"></span></a></p>
+        <h1>CharlieBot<span class="badge">In-dev</span></h1>
+        <p>A Discord chatbot with the bare essentials!</p>
+        <p><a class="btn btn-default btn-lg" href="/#projects" role="button"><span class="glyphicon glyphicon-arrow-left"></span> Back</a> <a class="btn btn-primary btn-lg" href="https://github.com/jayvolr/CharlieBot" target="_blank" role="button">View code <span class="glyphicon glyphicon-new-window"></span></a></p>
       </div>
     </div>
 
