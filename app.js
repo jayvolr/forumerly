@@ -2,7 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
-const authRoutes = require('./routes/auth');
+const authRoutes = require('./routes/auth')
+const secrets = require('./secrets')
 
 express()
   .set('view engine', 'hjs')
@@ -11,7 +12,7 @@ express()
   .use(bodyParser.urlencoded({extended: false}))
   .use(session({
     store: new RedisStore(),
-    secret: 'mertes likes seemingly pointless facts',
+    secret: secrets.session_secret,
     resave: false,
     saveUninitialized: false
   }))
