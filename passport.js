@@ -58,12 +58,14 @@ function register(req, email, password, done) {
 }
 
 passport.serializeUser(function(user, done) {
+  console.log('user serialized')
   done(null, user._id.toHexString())
 })
 
 passport.deserializeUser(function(id, done) {
   mongo.db.collection("users")
     .findOne({ _id: new ObjectID.createFromHexString(id) }, (err, user) => {
+      console.log('user deserialized')
       done(err, user)
     })
 })
