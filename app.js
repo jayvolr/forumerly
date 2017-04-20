@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-//const RedisStore = require('connect-redis')(session)
+const RedisStore = require('connect-redis')(session)
 const authRoutes = require('./routes/auth')
 const secrets = require('./secrets')
 const passport = require('passport')
@@ -12,7 +12,7 @@ express()
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({extended: false}))
   .use(session({
-    //store: new RedisStore(),
+    store: new RedisStore(),
     secret: "debug session secret",
     resave: false,
     saveUninitialized: false
