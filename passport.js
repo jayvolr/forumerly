@@ -63,7 +63,8 @@ passport.serializeUser(function(user, done) {
 })
 
 passport.deserializeUser(function(id, done) {
-  mongo.db.collection("users")
+  console.log('now supposed to deserialize')
+  mongo.db.collection('users')
     .findOne({ _id: new ObjectID.createFromHexString(id) }, (err, user) => {
       console.log('user deserialized')
       done(err, user)

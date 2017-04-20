@@ -5,5 +5,6 @@ MongoClient.connect('mongodb://107.170.32.124:27017/forumerly', (err, connection
   else {
     module.exports.db = connection
     console.log('Connected to mongodb successfully!!')
+    console.log(connection)
   }
 })
