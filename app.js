@@ -28,6 +28,9 @@ express()
       res.render('home')
     }
   })
+  .get('/s', (req, res) => {
+    res.send(req.session)
+  })
   .use(authRoutes)
   .listen('3000', () => {
     console.log('Server now listening on port 3000...')
