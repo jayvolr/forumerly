@@ -21,7 +21,7 @@ express()
   .use(passport.session())
   .get('/', (req, res) => {
     if (req.user) {
-      console.warn('should now render the forum')
+      console.warn('should now render the navbar')
       res.render('forumHome', {user: req.user})
     }else {
       console.warn('no req.user')

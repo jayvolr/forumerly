@@ -21,6 +21,7 @@ function authenticate(email, password, done) {
       if (!user || !(password === user.password)) {
         return done(null, false, { message: 'Invalid email or password' })
       }
+      console.log('authenticated!')
       return done(null, user)
     })
 }
