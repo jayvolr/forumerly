@@ -13,7 +13,7 @@ express()
   .use(bodyParser.urlencoded({extended: false}))
   .use(session({
     store: new RedisStore(),
-    secret: "debug session secret",
+    secret: secrets.session_secret,
     resave: false,
     saveUninitialized: false
   }))
@@ -21,10 +21,8 @@ express()
   .use(passport.session())
   .get('/', (req, res) => {
     if (req.user) {
-      console.warn('should now render the navbar')
       res.render('forumHome', {user: req.user})
     }else {
-      console.warn('no req.user')
       res.render('home')
     }
   })
