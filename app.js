@@ -13,7 +13,7 @@ express()
   .use(bodyParser.urlencoded({extended: false}))
   .use(session({
     store: new RedisStore(),
-    secret: secrets.session_secret,
+    secret: "debug session secret",
     resave: false,
     saveUninitialized: false
   }))
