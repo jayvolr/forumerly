@@ -4,6 +4,7 @@ const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 const authRoutes = require('./routes/auth')
 const secrets = require('./secrets')
+const passport = require('passport')
 
 express()
   .set('view engine', 'hjs')
@@ -16,13 +17,19 @@ express()
     resave: false,
     saveUninitialized: false
   }))
+  .use(passport.initialize())
+  .use(passport.session())
   .get('/', (req, res) => {
-    res.render('home')
+    if (req.user) {
+      res.render('forumHome', {user: req.user})
+    }else {
+      res.render('home')
+    }
   })
   .use(authRoutes)
   .listen('3000', () => {
     console.log('Server now listening on port 3000...')
   })
   .on('error', (error) => {
-    console.log(error)
+    console.error(error)
   })
