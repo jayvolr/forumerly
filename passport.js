@@ -50,6 +50,7 @@ function register(req, email, password, done) {
           mongo.db.collection('users')
             .insert(newUser, (err, result) => {
               if (err) {return done(err)}
+              console.warn('just put a thing in')
               return done(null, result.ops[0])
             })
         })
