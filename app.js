@@ -3,10 +3,14 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 const authRoutes = require('./routes/auth')
+const forumRoutes = require('./routes/forum')
 const secrets = require('./secrets')
 const passport = require('passport')
 
-express()
+var app = express()
+app.locals.partials = {navbar: 'partials/navbar', footer: 'partials/footer', head: 'partials/head'}
+
+app
   .set('view engine', 'hjs')
   .use(express.static(__dirname + '/public'))
   .use(bodyParser.json())
@@ -21,15 +25,17 @@ express()
   .use(passport.session())
   .get('/', (req, res) => {
     if (req.user) {
+      app.locals.user = req.user
       res.render('forumHome', {user: req.user})
     }else {
       res.render('home')
     }
   })
   .get('/s', (req, res) => {
-    res.send(req.session)
+    res.send(req.user)
   })
   .use(authRoutes)
+  .use(forumRoutes)
   .listen('3000', () => {
     console.log('Server now listening on port 3000...')
   })

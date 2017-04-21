@@ -1,0 +1,6 @@
+<footer class="footer">
+  <div class="container">
+    <hr>
+    <p class="text-muted">Made by <a href="http://jayvolr.me/">Jon Love</a> - <a href="https://github.com/jayvolr">GitHub</a> | <a href="https://twitter.com/jayvolr">Twitter</a> | <a href="https://www.linkedin.com/in/jonlov4/">Linkedin</a></p>
+  </div>
+</footer>

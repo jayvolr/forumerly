@@ -3,14 +3,14 @@
   <head>
     <meta charset="utf-8">
     <title>Forumerly</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    {{> head }}
     <link href="css/forumerly.css" rel="stylesheet">
   </head>
   <body>
     <div class="container">
 
       <br>
-      <div class="alert alert-warning" role="alert">This site is being actively worked on but is <strong>currently non-functional.</strong></div>
+      <div class="alert alert-warning" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>This site is currently a work in progress and is <strong>mostly non-functional.</strong></div>
       <h1>{{ message }}</h1>
       <h1><a id="logoLink" href="/"><span id="logoTrick">Forum</span>erly </a><small>A basic, open source, internet forum application.</small></h1>
       <hr>
@@ -40,13 +40,6 @@
         <button type="submit" class="form-control btn-default">Login</button>
       </form>
     </div>
-
-      <footer class="footer">
-        <div class="container">
-          <hr>
-          <p class="text-muted">Made by <a href="http://jayvolr.me/">Jon Love</a> - <a href="https://github.com/jayvolr">GitHub</a> | <a href="https://twitter.com/jayvolr">Twitter</a> | <a href="https://www.linkedin.com/in/jonlov4/">Linkedin</a></p>
-        </div>
-      </footer>
-
+      {{> footer}}
   </body>
 </html>

@@ -1,0 +1,16 @@
+.no-link {
+  color: #555;
+}
+
+.no-link:hover {
+  text-decoration: none;
+  color: #555;
+}
+
+.thread:hover {
+  background-color: #ddd !important;
+}
+
+.thread {
+  color: #555;
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{ topic }}</title>
+    <link rel="stylesheet" href="/css/master.css">
+    {{> head }}
+  </head>
+  <body>
+    {{> navbar}}
+    <div class="container">
+      <div class="alert alert-warning" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>This site is currently a work in progress and is <strong>mostly non-functional.</strong></div>
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/{{ lcCategory }}">{{ category }}</a></li>
+        <li class="active">{{ topic }}</li>
+      </ol>
+
+      <a class="btn btn-primary" href="/createThread?topic={{lcTopic}}" role="button">New Thread</a>
+      <hr>
+      {{#bool}}
+        <div class="list-group">
+          <div style="font-size: 24px" class="list-group-item active">Threads</div>
+          <table class="table table-striped">
+            <tr>
+              <th>Subject</th>
+              <th style="text-align: center">Posted By</th>
+              <th style="text-align: center">Replies</th>
+              <th style="text-align: center">Posted</th>
+              <th style="text-align: center">Last Post By</th>
+              <th style="text-align: center">Last Post</th>
+            </tr>
+          {{#threads}}
+            <tr class="thread">
+              <td><a class="no-link" href="/thread/{{ _id }}"><div class="text" style="height:100%;width:100%">{{ subject }}</div></a></td>
+              <td style="text-align: center"><a class="no-link" href="/user/{{ posterUsername }}"><div class="text" style="height:100%;width:100%">{{ posterUsername }}</div></a></td>
+              <td style="text-align: center">{{ replies }}</td>
+              <td style="text-align: center">{{ formatedPostDate }}</td>
+              <td style="text-align: center"><a class="no-link" href="/user/{{ posterUsername }}"><div class="text" style="height:100%;width:100%">{{ lastPostBy }}</div></a></td>
+              <td style="text-align: center">{{ formatedLastPostDate }}</td>
+            </tr>
+          {{/threads}}
+          </table>
+        </div>
+      {{/bool}}
+      {{^bool}}
+        <h3 class="text-muted">Oh no, there doesn't appear to be anything here! Fix that by <a href="/createThread?topic={{lcTopic}}">creating a thread.</a></h3>
+      {{/bool}}
+    </div>
+    {{> footer}}
+  </body>
+</html>

@@ -5,7 +5,8 @@ const ObjectID = require('mongodb').ObjectID
 
 passport.use(new LocalStrategy({
   usernameField: 'email',
-  passwordField: 'password'
+  passwordField: 'password',
+  passReqToCallback: true
 }, authenticate))
 
 passport.use("local-register", new LocalStrategy({
@@ -14,7 +15,7 @@ passport.use("local-register", new LocalStrategy({
   passReqToCallback: true
 }, register))
 
-function authenticate(email, password, done) {
+function authenticate(req, email, password, done) {
   mongo.db.collection("users")
     .findOne({ email: email }, {collation: {locale: "en", strength: 2}}, (err, user) => {
       if (err) {return done(err)}
