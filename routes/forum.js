@@ -70,15 +70,15 @@ router
       replies: 0
     }
 
-    res.send(req.body)
+    //res.send(req.body)
 
-    // mongo.db.collection('threads')
-    //   .insert(newThread, (err, result) => {
-    //     if (err) {console.log(err)}else {
-    //       var category = getCategoryFromTopic(req.query.topic)
-    //       res.redirect('/thread/'+result.ops[0]._id)
-    //     }
-    //   })
+    mongo.db.collection('threads')
+      .insert(newThread, (err, result) => {
+        if (err) {console.log(err)}else {
+          var category = getCategoryFromTopic(req.query.topic)
+          res.redirect('/thread/'+result.ops[0]._id)
+        }
+      })
   })
   .get('/:category', (req, res) => {
     res.send(req.params.category)
