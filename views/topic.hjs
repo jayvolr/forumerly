@@ -16,7 +16,7 @@
         <li class="active">{{ topic }}</li>
       </ol>
 
-      <a class="btn btn-primary" href="/createThread?topic={{lcTopic}}" role="button">New Thread</a>
+      <a class="btn btn-primary" href="/createThread/{{ lcTopic }}" role="button">New Thread</a>
       <hr>
       {{#bool}}
         <div class="list-group">

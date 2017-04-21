@@ -11,16 +11,25 @@
 
       <ol class="breadcrumb">
         <li><a href="/">Home</a></li>
-        <li><a href="/{{ lcCategory }}">{{ category }}</a></li>
-        <li class="active">{{ topic }}</li>
+        <li><a href="/{{ thread.lcCategory }}">{{ thread.category }}</a></li>
+        <li><a href="/{{ thread.lcCategory }}/{{ thread.lcTopic }}">{{ thread.topic }}</a></li>
       </ol>
 
       <div class="list-group">
-        <div style="font-size: 20px" class="list-group-item active">{{ id }}</div>
-        <div class="list-group-item">
-          <p class="lead">Body text here</p>
+        <div style="font-size: 20px; display: block; width: inherit;" class="list-group-item active">{{ thread.subject }}</div>
+        <div style="display: table; height: 100%; width: 100%; padding-left: 0" class="list-group-item">
+          <div class="col-sm-2 col-xs-3">
+            <img style="width: 70%" src="/images/profile.png">
+            <a style="display: block; width: 100%; padding-top: 5px;" href="/user/{{ thread.posterUsername }}">{{ thread.posterUsername }}</a>
+          </div>
+          <div style="padding-left: 20px; border-left: solid rgba(51, 51, 51, 0.11) 1px" class="col-sm-10 col-xs-9 pull-right">
+            <small>{{ thread.formatedPostDate }}</small>
+            <p class="lead">{{ thread.body }}</p>
+          </div>
         </div>
       </div>
+
+      <a class="pull-right btn btn-primary" href="/createReply/{{ thread._id }}" role="button">Reply</a>
 
     </div>
     {{> footer }}

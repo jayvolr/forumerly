@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const mongo = require('../db')
+const ObjectID = require('mongodb').ObjectID
 const moment = require('moment-timezone')
 
 String.prototype.capitalizeFirstLetter = function() {
@@ -27,12 +28,32 @@ function parseData(data) {
   return data
 }
 
+function parseSingleData(data) {
+  data.formatedPostDate = moment(data.creationDate).startOf('minute').fromNow()
+  data.formatedLastPostDate = moment(data.lastPostDate).startOf('minute').fromNow()
+  return data
+}
+
 router
-  .get('/createThread', (req, res) => {
-    res.render('newThread', {lcCategory: getCategoryFromTopic(req.query.topic), category: getCategoryFromTopic(req.query.topic).capitalizeFirstLetter(), lcTopic: req.query.topic, topic: req.query.topic.capitalizeFirstLetter()})
+  .get('/createThread/:topic', (req, res) => {
+    if (topicExists(req.params.topic)) {
+      res.render('newThread', {lcCategory: getCategoryFromTopic(req.params.topic), category: getCategoryFromTopic(req.params.topic).capitalizeFirstLetter(), lcTopic: req.params.topic, topic: req.params.topic.capitalizeFirstLetter()})
+    }else {
+      res.sendStatus(404)
+    }
   })
   .get('/thread/:id', (req, res) => {
-    res.render('thread', {id: req.params.id})
+    mongo.db.collection('threads')
+      .findOne({_id: new ObjectID.createFromHexString(req.params.id)}, (err, thread) => {
+        if(err){console.log(err)}else {
+          var thread = parseSingleData(thread)
+          thread.category = getCategoryFromTopic(thread.topic).capitalizeFirstLetter()
+          thread.lcCategory = thread.category.toLowerCase()
+          thread.lcTopic = thread.topic
+          thread.topic = thread.topic.capitalizeFirstLetter()
+          res.render('thread', {thread: thread})
+        }
+      })
   })
   .post('/createThread', (req, res) => {
 
@@ -49,13 +70,15 @@ router
       replies: 0
     }
 
-    mongo.db.collection('threads')
-      .insert(newThread, (err, result) => {
-        if (err) {console.log(err)}else {
-          var category = getCategoryFromTopic(req.query.topic)
-          res.redirect('/'+category+'/'+req.query.topic)
-        }
-      })
+    res.send(req.body)
+
+    // mongo.db.collection('threads')
+    //   .insert(newThread, (err, result) => {
+    //     if (err) {console.log(err)}else {
+    //       var category = getCategoryFromTopic(req.query.topic)
+    //       res.redirect('/thread/'+result.ops[0]._id)
+    //     }
+    //   })
   })
   .get('/:category', (req, res) => {
     res.send(req.params.category)
