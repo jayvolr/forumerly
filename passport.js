@@ -2,6 +2,7 @@ const mongo = require('./db')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const ObjectID = require('mongodb').ObjectID
+const bcrypt = require('bcrypt-nodejs')
 
 passport.use(new LocalStrategy({
   usernameField: 'email',
@@ -19,7 +20,7 @@ function authenticate(req, email, password, done) {
   mongo.db.collection("users")
     .findOne({ email: email }, {collation: {locale: "en", strength: 2}}, (err, user) => {
       if (err) {return done(err)}
-      if (!user || !(password === user.password)) {
+      if (!user || !bcrypt.compareSync(password, user.password)) {
         return done(null, false, { message: 'Invalid email or password' })
       }
       return done(null, user)
@@ -45,7 +46,7 @@ function register(req, email, password, done) {
           var newUser = {
             email: email,
             username: req.body.username,
-            password: password
+            password: bcrypt.hashSync(password)
           }
 
           mongo.db.collection('users')
