@@ -63,7 +63,6 @@ router
             thread.lcCategory = thread.category.toLowerCase()
             thread.lcTopic = thread.topic
             thread.topic = thread.topic.capitalizeFirstLetter()
-            //res.send(thread)
             res.render('createReply', {thread: thread})
           }else {
             res.sendStatus(404)
@@ -86,12 +85,15 @@ router
         _id: new ObjectID.createFromHexString(req.params.id)
       },
       {
-        $set: {lastPostBy: req.user.username},
-        $set: {lastPostDate: date},
-        $inc: {numReplies: 1},
-        $addToSet: {replies: newReply}
+        $set: {
+          'lastPostBy': req.user.username,
+          'lastPostDate': date
+        },
+        $inc: {'numReplies': 1},
+        $addToSet: {'replies': newReply}
       }, (err, result) => {
         if (err){console.log(err)}else {
+          console.log('lastPostBy should now be '+req.user.username)
           res.redirect('/thread/'+req.params.id)
         }
       })

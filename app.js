@@ -24,7 +24,6 @@ app
   .use(passport.initialize())
   .use(passport.session())
   .get('/', (req, res) => {
-    console.log(req.isAuthenticated())
     if (req.user) {
       app.locals.user = req.user
       res.render('forumHome', {user: req.user})
