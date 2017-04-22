@@ -98,7 +98,6 @@ router
         $addToSet: {'replies': newReply}
       }, (err, result) => {
         if (err){console.log(err)}else {
-          console.log('lastPostBy should now be '+req.user.username)
           res.redirect('/thread/'+req.params.id)
         }
       })
@@ -107,7 +106,7 @@ router
   .get('/thread/:id', (req, res) => {
     mongo.db.collection('threads')
       .findOne({ _id: new ObjectID.createFromHexString(req.params.id) }, (err, thread) => {
-        if(err){console.log(err)}else {
+        if(err){console.log(err); res.sendStatus(500)}else {
           var thread = parseSingleData(thread)
           thread.category = getCategoryFromTopic(thread.topic).capitalizeFirstLetter()
           thread.lcCategory = thread.category.toLowerCase()

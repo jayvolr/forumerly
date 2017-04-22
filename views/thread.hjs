@@ -17,25 +17,25 @@
 
       <div class="list-group">
         <div style="font-size: 20px; display: block; width: inherit;" class="list-group-item active">{{ thread.subject }}</div>
-        <div style="display: table; height: 100%; width: 100%; padding-left: 0" class="list-group-item">
+        <div style="display: flex; height: 100%; width: 100%; padding-left: 0" class="list-group-item">
           <div class="col-sm-2 col-xs-3">
             <img style="width: 70%" src="/images/profile.png">
             <a style="display: block; width: 100%; padding-top: 5px;" href="/user/{{ thread.posterUsername }}">{{ thread.posterUsername }}</a>
           </div>
           <div style="padding-left: 20px; border-left: solid rgba(51, 51, 51, 0.11) 1px" class="col-sm-10 col-xs-9 pull-right">
             <small>{{ thread.formatedPostDate }}</small>
-            <p class="lead">{{ thread.body }}</p>
+            <p style="white-space: pre-wrap; overflow-wrap: break-word;" class="lead">{{ thread.body }}</p>
           </div>
         </div>
         {{#thread.replies}}
-          <div style="display: table; height: 100%; width: 100%; padding-left: 0" class="list-group-item pull-right">
+          <div style="display: flex; overflow-wrap: break-word; height: 100%; width: 100%; padding-left: 0" class="list-group-item pull-right">
             <div class="col-sm-1 col-xs-3">
               <img style="width: 100%" src="/images/profile.png">
               <a style="display: block; width: 100%; padding-top: 5px;" href="/user/{{ posterUsername }}">{{ posterUsername }}</a>
             </div>
             <div style="padding-left: 20px; border-left: solid rgba(51, 51, 51, 0.11) 1px" class="col-sm-11 col-xs-9 pull-right">
               <small>{{ formatedPostDate }}</small>
-              <p class="lead">{{ message }}</p>
+              <p style="white-space: pre-wrap" class="lead">{{ message }}</p>
             </div>
           </div>
         {{/thread.replies}}
