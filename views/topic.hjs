@@ -34,7 +34,7 @@
             <tr class="thread">
               <td><a class="no-link" href="/thread/{{ _id }}"><div class="text" style="height:100%;width:100%">{{ subject }}</div></a></td>
               <td style="text-align: center"><a class="no-link" href="/user/{{ posterUsername }}"><div class="text" style="height:100%;width:100%">{{ posterUsername }}</div></a></td>
-              <td style="text-align: center">{{ replies }}</td>
+              <td style="text-align: center">{{ numReplies }}</td>
               <td style="text-align: center">{{ formatedPostDate }}</td>
               <td style="text-align: center"><a class="no-link" href="/user/{{ posterUsername }}"><div class="text" style="height:100%;width:100%">{{ lastPostBy }}</div></a></td>
               <td style="text-align: center">{{ formatedLastPostDate }}</td>

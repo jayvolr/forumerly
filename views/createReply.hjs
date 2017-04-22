@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Reply</title>
+    {{> head}}
+  </head>
+  <body>
+    {{> navbar}}
+    <div class="container">
+
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/{{ thread.lcCategory }}">{{ thread.category }}</a></li>
+        <li><a href="/{{ thread.lcCategory }}/{{ thread.lcTopic }}">{{ thread.topic }}</a></li>
+      </ol>
+
+      <form action="/createReply/{{ thread._id }}" method="post" class="">
+        <h2 class="text-muted">Reply</h2>
+        <hr>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea type="text" rows="10" class="form-control" name="message" placeholder="Type your reply here..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Post</button>
+        <button type="button" id="replyPreview" class="btn btn-default">Preview</button>
+      </form>
+
+    </div>
+    {{> footer}}
+  </body>
+</html>

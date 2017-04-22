@@ -12,6 +12,13 @@ var topics = {
   meta: 'general'
 }
 
+function loginRequired(req, res, next) {
+  if (!req.isAuthenticated()) {
+    return res.redirect('/')
+  }
+  next()
+}
+
 function getCategoryFromTopic(topic) {
   return topics[topic]
 }
@@ -31,20 +38,68 @@ function parseData(data) {
 function parseSingleData(data) {
   data.formatedPostDate = moment(data.creationDate).startOf('minute').fromNow()
   data.formatedLastPostDate = moment(data.lastPostDate).startOf('minute').fromNow()
+  if (data.replies) {
+    data.replies.forEach((i) => {
+      i.formatedPostDate = moment(i.creationDate).startOf('minute').fromNow()
+    })
+  }
   return data
 }
 
 router
-  .get('/createThread/:topic', (req, res) => {
+  .get('/createThread/:topic', loginRequired, (req, res) => {
     if (topicExists(req.params.topic)) {
       res.render('newThread', {lcCategory: getCategoryFromTopic(req.params.topic), category: getCategoryFromTopic(req.params.topic).capitalizeFirstLetter(), lcTopic: req.params.topic, topic: req.params.topic.capitalizeFirstLetter()})
     }else {
       res.sendStatus(404)
     }
   })
+  .get('/createReply/:id', loginRequired, (req, res) => {
+    mongo.db.collection('threads')
+      .findOne({ _id: new ObjectID.createFromHexString(req.params.id) }, (err, thread) => {
+        if(err){console.log(err)}else {
+          if (thread !== undefined) {
+            thread.category = getCategoryFromTopic(thread.topic).capitalizeFirstLetter()
+            thread.lcCategory = thread.category.toLowerCase()
+            thread.lcTopic = thread.topic
+            thread.topic = thread.topic.capitalizeFirstLetter()
+            //res.send(thread)
+            res.render('createReply', {thread: thread})
+          }else {
+            res.sendStatus(404)
+          }
+        }
+      })
+  })
+  .post('/createReply/:id', loginRequired, (req, res) => {
+    var date = new Date()
+
+    var newReply = {
+      posterUsername: req.user.username,
+      parentThread: req.params.id,
+      message: req.body.message,
+      creationDate: date
+    }
+
+    mongo.db.collection('threads')
+      .updateOne({
+        _id: new ObjectID.createFromHexString(req.params.id)
+      },
+      {
+        $set: {lastPostBy: req.user.username},
+        $set: {lastPostDate: date},
+        $inc: {numReplies: 1},
+        $addToSet: {replies: newReply}
+      }, (err, result) => {
+        if (err){console.log(err)}else {
+          res.redirect('/thread/'+req.params.id)
+        }
+      })
+
+  })
   .get('/thread/:id', (req, res) => {
     mongo.db.collection('threads')
-      .findOne({_id: new ObjectID.createFromHexString(req.params.id)}, (err, thread) => {
+      .findOne({ _id: new ObjectID.createFromHexString(req.params.id) }, (err, thread) => {
         if(err){console.log(err)}else {
           var thread = parseSingleData(thread)
           thread.category = getCategoryFromTopic(thread.topic).capitalizeFirstLetter()
@@ -55,7 +110,7 @@ router
         }
       })
   })
-  .post('/createThread', (req, res) => {
+  .post('/createThread', loginRequired, (req, res) => {
 
     var date = new Date()
 
@@ -67,7 +122,8 @@ router
       creationDate: date,
       lastPostBy: req.user.username,
       lastPostDate: date,
-      replies: 0
+      numReplies: 0,
+      replies: []
     }
 
     //res.send(req.body)

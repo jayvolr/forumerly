@@ -27,9 +27,22 @@
             <p class="lead">{{ thread.body }}</p>
           </div>
         </div>
+        {{#thread.replies}}
+          <div style="display: table; height: 100%; width: 100%; padding-left: 0" class="list-group-item pull-right">
+            <div class="col-sm-1 col-xs-3">
+              <img style="width: 100%" src="/images/profile.png">
+              <a style="display: block; width: 100%; padding-top: 5px;" href="/user/{{ posterUsername }}">{{ posterUsername }}</a>
+            </div>
+            <div style="padding-left: 20px; border-left: solid rgba(51, 51, 51, 0.11) 1px" class="col-sm-11 col-xs-9 pull-right">
+              <small>{{ formatedPostDate }}</small>
+              <p class="lead">{{ message }}</p>
+            </div>
+          </div>
+        {{/thread.replies}}
+
       </div>
 
-      <a class="pull-right btn btn-primary" href="/createReply/{{ thread._id }}" role="button">Reply</a>
+      <a style="clear: right; margin-top: 10px" class="pull-right btn btn-primary" href="/createReply/{{ thread._id }}" role="button">Reply</a>
 
     </div>
     {{> footer }}
