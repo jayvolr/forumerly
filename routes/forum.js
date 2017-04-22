@@ -9,7 +9,12 @@ String.prototype.capitalizeFirstLetter = function() {
 }
 
 var topics = {
-  meta: 'general'
+  'meta': 'general',
+  'discussion': 'general',
+  'off-topic': 'general',
+  'att': 'technology',
+  'webdev': 'technology',
+  'programming': 'technology'
 }
 
 function loginRequired(req, res, next) {
@@ -145,10 +150,10 @@ router
     if (topicExists(req.params.topic)) {
 
       mongo.db.collection('threads')
-        .find()
+        .find({topic: req.params.topic})
         .toArray((err, result) => {
           if (err) {console.log(err)}else {
-            if (result != undefined) {
+            if (result.length > 0) {
               var parsedResult = parseData(result)
               res.render('topic', {bool: true, threads: parsedResult, lcTopic: req.params.topic, topic: req.params.topic.capitalizeFirstLetter(), lcCategory: req.params.category,category: req.params.category.capitalizeFirstLetter()})
             }else {

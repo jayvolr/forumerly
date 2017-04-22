@@ -11,23 +11,20 @@
       <div class="list-group">
         <a href="/general" style="font-size: 24px" class="list-group-item active">General</a>
         <a href="/general/meta" class="list-group-item"><span style="font-size: 20px">Meta</span> <br>Discussion about the site itself e.g. comments, improvements, announcements.</a>
-        <a href="#" class="list-group-item">Morbi leo risus</a>
-        <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-        <a href="#" class="list-group-item">Vestibulum at eros</a>
+        <a href="/general/discussion" class="list-group-item"><span style="font-size: 20px">Discussion</span> <br>Geneal discussion about whatever you feel like talking about.</a>
+        <a href="/general/off-topic" class="list-group-item"><span style="font-size: 20px">Off-topic</span> <br>Don't know where your topic fits in? Post it here.</a>
       </div>
       <div class="list-group">
-        <div class="list-group-item active">Technology</div>
-        <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-        <a href="#" class="list-group-item">Morbi leo risus</a>
-        <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-        <a href="#" class="list-group-item">Vestibulum at eros</a>
+        <a href="/technology" style="font-size: 24px" class="list-group-item active">Technology</a>
+        <a href="/technology/att" class="list-group-item"><span style="font-size: 20px">All Things Tech</span> <br>Electric cars, phones, wind farms; it's all welcome here.</a>
+        <a href="/technology/webdev" class="list-group-item"><span style="font-size: 20px">Web Development</span> <br>The best category.</a>
+        <a href="/technology/programming" class="list-group-item"><span style="font-size: 20px">General Programming</span> <br>For talk about or help with programming not related to web development.</a>
       </div>
       <div class="list-group">
-        <div class="list-group-item active">Other</div>
-        <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-        <a href="#" class="list-group-item">Morbi leo risus</a>
-        <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-        <a href="#" class="list-group-item">Vestibulum at eros</a>
+        <a href="#" style="font-size: 24px" class="list-group-item active">Other</a>
+        <a href="#" class="list-group-item"><span style="font-size: 20px">stuff</span> <br>for when lori wont leave you alone</a>
+        <a href="#" class="list-group-item"><span style="font-size: 20px">and</span> <br>...</a>
+        <a href="#" class="list-group-item"><span style="font-size: 20px">things</span> <br>...</a>
       </div>
 
     </div>

@@ -17,8 +17,8 @@
       </ol>
 
       <a class="btn btn-primary" href="/createThread/{{ lcTopic }}" role="button">New Thread</a>
+
       <hr>
-      {{#bool}}
         <div class="list-group">
           <div style="font-size: 24px" class="list-group-item active">Threads</div>
           <table class="table table-striped">
@@ -42,9 +42,8 @@
           {{/threads}}
           </table>
         </div>
-      {{/bool}}
       {{^bool}}
-        <h3 class="text-muted">Oh no, there doesn't appear to be anything here! Fix that by <a href="/createThread?topic={{lcTopic}}">creating a thread.</a></h3>
+        <h3 style="text-align: center" class="text-muted">Oh no, there doesn't appear to be anything here! Fix that by <a href="/createThread/{{ lcTopic }}">creating a thread.</a></h3>
       {{/bool}}
     </div>
     {{> footer}}
