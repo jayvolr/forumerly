@@ -148,13 +148,14 @@ router
       })
   })
   .get('/:category', (req, res) => {
-    res.send(req.params.category)
+    res.send('ill make this page later')
   })
   .get('/:category/:topic', (req, res) => {
     if (topicExists(req.params.topic)) {
 
       mongo.db.collection('threads')
         .find({topic: req.params.topic})
+        .sort({'lastPostDate': -1})
         .toArray((err, result) => {
           if (err) {console.log(err)}else {
             if (result.length > 0) {
