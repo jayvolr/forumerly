@@ -18,7 +18,7 @@
       <div class="list-group">
         <div style="font-size: 20px; display: block; width: inherit; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" class="list-group-item active">{{ thread.subject }}</div>
         <div style="display: flex; height: 100%; width: 100%; padding-left: 0" class="list-group-item">
-          <div class="col-sm-2 col-xs-3">
+          <div class="col-sm-2 col-xs-4" style="text-align: center">
             <img style="width: 70%" src="/images/profile.png">
             <a style="display: block; width: 100%; padding-top: 5px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" href="/user/{{ thread.posterUsername }}">{{ thread.posterUsername }}</a>
           </div>
@@ -29,7 +29,7 @@
         </div>
         {{#thread.replies}}
           <div style="display: flex; overflow-wrap: break-word; height: 100%; width: 100%; padding-left: 0" class="list-group-item pull-right">
-            <div class="col-sm-1 col-xs-3">
+            <div class="col-sm-1 col-xs-3" style="text-align: center">
               <img style="width: 100%" src="/images/profile.png">
               <a style="display: block; width: 100%; padding-top: 5px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" href="/user/{{ posterUsername }}">{{ posterUsername }}</a>
             </div>
