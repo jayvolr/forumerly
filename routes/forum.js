@@ -117,6 +117,11 @@ router
           thread.lcCategory = thread.category.toLowerCase()
           thread.lcTopic = thread.topic
           thread.topic = thread.topic.capitalizeFirstLetter()
+          if (thread.subject.length > 18) {
+            thread.browserTitle = thread.subject.slice(0, 15) + '...'
+          }else {
+            thread.browserTitle = thread.subject
+          }
           res.render('thread', {thread: thread})
         }
       })
