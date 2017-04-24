@@ -6,6 +6,7 @@ const authRoutes = require('./routes/auth')
 const forumRoutes = require('./routes/forum')
 const secrets = require('./secrets')
 const passport = require('passport')
+const moment = require('moment-timezone')
 
 var app = express()
 app.locals.partials = {navbar: 'partials/navbar', footer: 'partials/footer', head: 'partials/head'}
@@ -33,6 +34,9 @@ app
   })
   .get('/s', (req, res) => {
     res.send(req.user)
+  })
+  .get('/tz', (req, res) => {
+    res.send(moment.tz.guess())
   })
   .use(authRoutes)
   .use(forumRoutes)
