@@ -7,15 +7,15 @@ require('../passport')
 router
   .post('/signup', passport.authenticate('local-register', {
     successRedirect: '/',
-    failureRedirect: '/login'
+    failureRedirect: '/'
   }))
   .post('/login', passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/login'
+    failureRedirect: '/'
   }))
   .get('/logout', (req, res) => {
     req.logout()
-    res.redirect('/login')
+    res.redirect('back')
   })
 
 module.exports = router

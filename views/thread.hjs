@@ -8,7 +8,9 @@
   <body>
     {{> navbar }}
     <div class="container">
-
+      {{#message}}
+        <div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{.}}</div>
+      {{/message}}
       <ol class="breadcrumb">
         <li><a href="/">Home</a></li>
         <li><a href="/{{ thread.lcCategory }}">{{ thread.category }}</a></li>

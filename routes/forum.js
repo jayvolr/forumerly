@@ -25,16 +25,23 @@ var topics = {
 
 function loginRequired(req, res, next) {
   if (!req.isAuthenticated()) {
-    return res.redirect('/login')
+    req.flash('info', 'You must be logged in to perform that action.')
+    return res.redirect('back')
   }
   next()
 }
 
 function adminRequired(req, res, next) {
-  if (!req.user.admin) {
-    return res.sendStatus(403)
+  if (req.isAuthenticated()) {
+    if (!req.user.admin) {
+      req.flash('info', 'Only site administrators are permitted to visit that page.')
+      return res.redirect('back')
+    }
+    next()
+  }else {
+    req.flash('info', 'Only site administrators are permitted to visit that page.')
+    return res.redirect('back')
   }
-  next()
 }
 
 function getCategoryFromTopic(topic) {
@@ -81,7 +88,7 @@ router
   })
   .get('/createThread/:topic', loginRequired, (req, res) => {
     if (topicExists(req.params.topic)) {
-      res.render('newThread', {lcCategory: getCategoryFromTopic(req.params.topic), category: getCategoryFromTopic(req.params.topic).capitalizeFirstLetter(), lcTopic: req.params.topic, topic: req.params.topic.capitalizeFirstLetter()})
+      res.render('newThread', {lcCategory: getCategoryFromTopic(req.params.topic), category: getCategoryFromTopic(req.params.topic).capitalizeFirstLetter(), lcTopic: req.params.topic, topic: req.params.topic.capitalizeFirstLetter(), message: req.flash('info')})
     }else {
       res.sendStatus(404)
     }
@@ -95,7 +102,7 @@ router
             thread.lcCategory = thread.category.toLowerCase()
             thread.lcTopic = thread.topic
             thread.topic = thread.topic.capitalizeFirstLetter()
-            res.render('createReply', {thread: thread})
+            res.render('createReply', {thread: thread, message: req.flash('info')})
           }else {
             res.sendStatus(404)
           }
@@ -144,7 +151,7 @@ router
           }else {
             thread.browserTitle = thread.subject
           }
-          res.render('thread', {thread: thread})
+          res.render('thread', {thread: thread, message: req.flash('info')})
         }
       })
   })
@@ -206,9 +213,9 @@ router
           if (err) {console.log(err)}else {
             if (result.length > 0) {
               var parsedResult = parseData(result)
-              res.render('topic', {bool: true, threads: parsedResult, lcTopic: req.params.topic, topic: req.params.topic.capitalizeFirstLetter(), lcCategory: req.params.category,category: req.params.category.capitalizeFirstLetter()})
+              res.render('topic', {bool: true, threads: parsedResult, lcTopic: req.params.topic, topic: req.params.topic.capitalizeFirstLetter(), lcCategory: req.params.category,category: req.params.category.capitalizeFirstLetter(), message: req.flash('info')})
             }else {
-              res.render('topic', {bool: false, lcTopic: req.params.topic, topic: req.params.topic.capitalizeFirstLetter(), lcCategory: req.params.category,category: req.params.category.capitalizeFirstLetter()})
+              res.render('topic', {bool: false, lcTopic: req.params.topic, topic: req.params.topic.capitalizeFirstLetter(), lcCategory: req.params.category,category: req.params.category.capitalizeFirstLetter(), message: req.flash('info')})
             }
           }
         })

@@ -7,6 +7,7 @@ const forumRoutes = require('./routes/forum')
 const secrets = require('./secrets')
 const passport = require('passport')
 const moment = require('moment-timezone')
+const flash = require('connect-flash')
 
 var app = express()
 app.locals.partials = {navbar: 'partials/navbar', footer: 'partials/footer', head: 'partials/head'}
@@ -24,20 +25,30 @@ app
   }))
   .use(passport.initialize())
   .use(passport.session())
+  .use(flash())
+  .use((req, res, next) => {
+    app.locals.authenticated = req.isAuthenticated()
+    next()
+  })
   .get('/', (req, res) => {
     if (req.user) {
       app.locals.user = req.user
     }
-    res.render('forumHome', {user: req.user})
+    res.render('forumHome', {user: req.user, message: req.flash('info')})
   })
-  .get('/login', (req, res) => {
-    res.render('home')
+  .get('/register', (req, res) => {
+    res.render('register')
   })
   .get('/s', (req, res) => {
     res.send(req.user)
   })
   .get('/tz', (req, res) => {
     res.send(moment.tz.guess())
+  })
+  .get('/flash', function(req, res){
+    // Set a flash message by passing the key, followed by the value, to req.flash().
+    req.flash('info', 'Flash is back!')
+    res.redirect('/')
   })
   .use(authRoutes)
   .use(forumRoutes)
