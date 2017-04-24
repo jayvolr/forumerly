@@ -27,10 +27,11 @@ app
   .get('/', (req, res) => {
     if (req.user) {
       app.locals.user = req.user
-      res.render('forumHome', {user: req.user})
-    }else {
-      res.render('home')
     }
+    res.render('forumHome', {user: req.user})
+  })
+  .get('/login', (req, res) => {
+    res.render('home')
   })
   .get('/s', (req, res) => {
     res.send(req.user)
