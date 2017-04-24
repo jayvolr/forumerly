@@ -16,12 +16,23 @@ var topics = {
   'off-topic': 'general',
   'att': 'technology',
   'webdev': 'technology',
-  'programming': 'technology'
+  'programming': 'technology',
+  'entertainment': 'other',
+  'sports': 'other',
+  'admins': 'other'
 }
+
 
 function loginRequired(req, res, next) {
   if (!req.isAuthenticated()) {
     return res.redirect('/')
+  }
+  next()
+}
+
+function adminRequired(req, res, next) {
+  if (!req.user.admin) {
+    return res.sendStatus(403)
   }
   next()
 }
@@ -32,6 +43,10 @@ function getCategoryFromTopic(topic) {
 
 function topicExists(topic) {
   return Object.keys(topics).includes(topic)
+}
+
+function categoryExists(category) {
+  return Object.values(topics).includes(category)
 }
 
 function parseData(data) {
@@ -58,7 +73,12 @@ function parseSingleData(data) {
   return data
 }
 
+
+
 router
+  .get('/createThread/admins', loginRequired, adminRequired, (req, res) => {
+    res.render('newThread', {lcCategory: 'other', category: 'Other', lcTopic: 'admins', topic: 'Admins'})
+  })
   .get('/createThread/:topic', loginRequired, (req, res) => {
     if (topicExists(req.params.topic)) {
       res.render('newThread', {lcCategory: getCategoryFromTopic(req.params.topic), category: getCategoryFromTopic(req.params.topic).capitalizeFirstLetter(), lcTopic: req.params.topic, topic: req.params.topic.capitalizeFirstLetter()})
@@ -144,8 +164,6 @@ router
       replies: []
     }
 
-    //res.send(req.body)
-
     mongo.db.collection('threads')
       .insert(newThread, (err, result) => {
         if (err) {console.log(err)}else {
@@ -154,8 +172,29 @@ router
         }
       })
   })
-  .get('/:category', (req, res) => {
-    res.send('ill make this page later')
+  .get('/general', (req, res) => {
+    res.render('general')
+  })
+  .get('/technology', (req, res) => {
+    res.render('tech')
+  })
+  .get('/other', (req, res) => {
+    res.render('other')
+  })
+  .get('/other/admins', adminRequired, (req, res) => {
+    mongo.db.collection('threads')
+      .find({topic: 'admins'})
+      .sort({'lastPostDate': -1})
+      .toArray((err, result) => {
+        if (err) {console.log(err)}else {
+          if (result.length > 0) {
+            var parsedResult = parseData(result)
+            res.render('topic', {bool: true, threads: parsedResult, lcTopic: 'admins', topic: 'Admins', lcCategory: 'other', category: 'Other'})
+          }else {
+            res.render('topic', {bool: false, lcTopic: 'admins', topic: 'Admins', lcCategory: 'other', category: 'Other'})
+          }
+        }
+      })
   })
   .get('/:category/:topic', (req, res) => {
     if (topicExists(req.params.topic)) {
