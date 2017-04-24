@@ -34,10 +34,10 @@ app
     if (req.user) {
       app.locals.user = req.user
     }
-    res.render('forumHome', {user: req.user, message: req.flash('info')})
+    res.render('forumHome', {user: req.user, error: req.flash('error'), success: req.flash('success')})
   })
   .get('/register', (req, res) => {
-    res.render('register')
+    res.render('register', {message: req.flash('error')})
   })
   .get('/s', (req, res) => {
     res.send(req.user)
@@ -47,7 +47,7 @@ app
   })
   .get('/flash', function(req, res){
     // Set a flash message by passing the key, followed by the value, to req.flash().
-    req.flash('info', 'Flash is back!')
+    req.flash('success', 'Flash is back!')
     res.redirect('/')
   })
   .use(authRoutes)

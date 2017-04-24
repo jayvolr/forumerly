@@ -7,11 +7,14 @@ require('../passport')
 router
   .post('/signup', passport.authenticate('local-register', {
     successRedirect: '/',
-    failureRedirect: '/'
+    failureRedirect: '/register',
+    failureFlash: true,
+    successFlash: 'Account created!'
   }))
   .post('/login', passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/'
+    failureRedirect: '/',
+    failureFlash: true
   }))
   .get('/logout', (req, res) => {
     req.logout()

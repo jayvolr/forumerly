@@ -8,9 +8,12 @@
   <body>
     {{> navbar }}
     <div class="container">
-      {{#message}}
+      {{#success}}
+        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{.}}</div>
+      {{/success}}
+      {{#error}}
         <div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{.}}</div>
-      {{/message}}
+      {{/error}}
       <div class="list-group">
         <a href="/general" style="font-size: 24px" class="list-group-item active">General</a>
         <a href="/general/meta" class="list-group-item"><span style="font-size: 20px">Meta</span> <br>Discussion about the site itself e.g. comments, improvements, announcements.</a>
