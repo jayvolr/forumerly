@@ -36,8 +36,8 @@ function topicExists(topic) {
 
 function parseData(data) {
   data.forEach((i) => {
-    i.formatedPostDate = moment(i.creationDate).tz(moment.tz.guess()).calendar()
-    i.formatedLastPostDate = moment(i.lastPostDate).tz(moment.tz.guess()).calendar()
+    i.formatedPostDate = moment(i.creationDate).calendar()
+    i.formatedLastPostDate = moment(i.lastPostDate).calendar()
     i.relativeLastPostDate = moment(i.lastPostDate).startOf('minute').fromNow()
     i.relativePostDate = moment(i.creationDate).startOf('minute').fromNow()
   })
@@ -45,13 +45,13 @@ function parseData(data) {
 }
 
 function parseSingleData(data) {
-  data.formatedPostDate = moment(data.creationDate).tz(moment.tz.guess()).calendar()
-  data.formatedLastPostDate = moment(data.lastPostDate).tz(moment.tz.guess()).calendar()
+  data.formatedPostDate = moment(data.creationDate).calendar()
+  data.formatedLastPostDate = moment(data.lastPostDate).calendar()
   data.relativePostDate = moment(data.creationDate).startOf('minute').fromNow()
   data.relativeLastPostDate = moment(data.lastPostDate).startOf('minute').fromNow()
   if (data.replies) {
     data.replies.forEach((i) => {
-      i.formatedPostDate = moment(i.creationDate).tz(moment.tz.guess()).calendar()
+      i.formatedPostDate = moment(i.creationDate).calendar()
       i.relativePostDate = moment(i.creationDate).startOf('minute').fromNow()
     })
   }
