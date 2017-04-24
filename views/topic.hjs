@@ -9,7 +9,6 @@
   <body>
     {{> navbar}}
     <div class="container">
-      <div class="alert alert-warning" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>This site is currently a work in progress and is <strong>mostly non-functional.</strong></div>
       <ol class="breadcrumb">
         <li><a href="/">Home</a></li>
         <li><a href="/{{ lcCategory }}">{{ category }}</a></li>
