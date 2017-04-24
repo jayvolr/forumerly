@@ -4,6 +4,8 @@ const mongo = require('../db')
 const ObjectID = require('mongodb').ObjectID
 const moment = require('moment-timezone')
 
+moment.tz.setDefault("America/New_York")
+
 String.prototype.capitalizeFirstLetter = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
@@ -34,8 +36,8 @@ function topicExists(topic) {
 
 function parseData(data) {
   data.forEach((i) => {
-    i.formatedPostDate = moment(i.creationDate).tz('America/New_York').calendar()
-    i.formatedLastPostDate = moment(i.lastPostDate).tz('America/New_York').calendar()
+    i.formatedPostDate = moment(i.creationDate).tz(moment.tz.guess()).calendar()
+    i.formatedLastPostDate = moment(i.lastPostDate).tz(moment.tz.guess()).calendar()
     i.relativeLastPostDate = moment(i.lastPostDate).startOf('minute').fromNow()
     i.relativePostDate = moment(i.creationDate).startOf('minute').fromNow()
   })
@@ -43,13 +45,13 @@ function parseData(data) {
 }
 
 function parseSingleData(data) {
-  data.formatedPostDate = moment(data.creationDate).tz('America/New_York').calendar()
-  data.formatedLastPostDate = moment(data.lastPostDate).tz('America/New_York').calendar()
+  data.formatedPostDate = moment(data.creationDate).tz(moment.tz.guess()).calendar()
+  data.formatedLastPostDate = moment(data.lastPostDate).tz(moment.tz.guess()).calendar()
   data.relativePostDate = moment(data.creationDate).startOf('minute').fromNow()
   data.relativeLastPostDate = moment(data.lastPostDate).startOf('minute').fromNow()
   if (data.replies) {
     data.replies.forEach((i) => {
-      i.formatedPostDate = moment(i.creationDate).tz('America/New_York').calendar()
+      i.formatedPostDate = moment(i.creationDate).tz(moment.tz.guess()).calendar()
       i.relativePostDate = moment(i.creationDate).startOf('minute').fromNow()
     })
   }
