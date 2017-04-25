@@ -34,12 +34,12 @@ function loginRequired(req, res, next) {
 function adminRequired(req, res, next) {
   if (req.isAuthenticated()) {
     if (!req.user.admin) {
-      req.flash('info', 'Only site administrators are permitted to visit that page.')
+      req.flash('error', 'Only site administrators are permitted to visit that page.')
       return res.redirect('back')
     }
     next()
   }else {
-    req.flash('info', 'Only site administrators are permitted to visit that page.')
+    req.flash('error', 'Only site administrators are permitted to visit that page.')
     return res.redirect('back')
   }
 }
@@ -186,7 +186,7 @@ router
     res.render('tech')
   })
   .get('/other', (req, res) => {
-    res.render('other')
+    res.render('other', {error: req.flash('error')})
   })
   .get('/other/admins', adminRequired, (req, res) => {
     mongo.db.collection('threads')

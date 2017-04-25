@@ -18,7 +18,11 @@ router
   }))
   .get('/logout', (req, res) => {
     req.logout()
-    res.redirect('back')
+    if(req.header("Referer") === 'http://localhost:3000/other/admins' || req.header("Referer") === 'http://forumerly.jayvolr.com/other/admins') {
+      res.redirect('/')
+    }else {
+      res.redirect('back')
+    }
   })
 
 module.exports = router

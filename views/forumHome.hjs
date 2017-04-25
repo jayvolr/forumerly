@@ -30,7 +30,7 @@
         <a href="/other" style="font-size: 24px" class="list-group-item active">Other</a>
         <a href="/other/entertainment" class="list-group-item"><span style="font-size: 20px">Entertainment</span> <br>Movies? TV? Music? This is the place!</a>
         <a href="/other/sports" class="list-group-item"><span style="font-size: 20px">Sports</span> <br>Talk about you favorite sports teams or rant about the ones you loathe.</a>
-        <a href="/other/admins" class="list-group-item"><span style="font-size: 20px">Admins <span style="font-size: small; top: 0px" class="glyphicon glyphicon-lock" aria-hidden="true"></span></span> <br>Off limits to normal users; for site administrators only.</a>
+        <a href="/other/admins" class="list-group-item"><span style="font-size: 20px">Admins <i style="font-size: medium" class="fa fa-lock" aria-hidden="true"></i></span> <br>Off limits to normal users; for site administrators only.</a>
       </div>
 
     </div>
