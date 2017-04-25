@@ -15,7 +15,7 @@
       <br>
       <div class="col-sm-3"></div>
       <form style="margin-top: 100px; text-align: center; background-color: #fdfdfd; padding: 30px; border-radius: 5px" action="/signup" method="post" class="col-sm-6">
-        <h2 style="margin-top: 0" >Sign Up</h2>
+        <h2 style="margin-top: 0; margin-bottom: 30px;" >Sign Up</h2>
         <div class="form-group">
           <input type="text" class="form-control" name="username" placeholder="Username">
         </div>
