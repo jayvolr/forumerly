@@ -22,7 +22,14 @@
         <div style="display: flex; height: 100%; width: 100%; padding-left: 0" class="list-group-item">
           <div class="col-sm-2 col-xs-4" style="text-align: center">
             <img style="width: 70%" src="/images/profile.png">
-            <a style="display: block; width: 100%; padding-top: 5px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" href="/user/{{ thread.posterUsername }}">{{ thread.posterUsername }}</a>
+            <a style="display: block; width: 100%; padding-top: 5px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" href="/user/{{ thread.posterUsername }}">
+              {{#thread.posterIsAdmin}}
+                <span style="color: #e84d30" title="Admin" data-toggle="tooltip" data-placement="right">{{ thread.posterUsername }}</span>
+              {{/thread.posterIsAdmin}}
+              {{^thread.posterIsAdmin}}
+                {{ thread.posterUsername }}
+              {{/thread.posterIsAdmin}}
+            </a>
           </div>
           <div style="padding-left: 20px; border-left: solid rgba(51, 51, 51, 0.11) 1px" class="col-sm-10 col-xs-9 pull-right">
             <small title="{{ thread.formatedPostDate }}" data-toggle="tooltip" data-placement="top">{{ thread.relativePostDate }}</small>
@@ -33,7 +40,14 @@
           <div style="display: flex; overflow-wrap: break-word; height: 100%; width: 100%; padding-left: 0" class="list-group-item pull-right">
             <div class="col-sm-1 col-xs-3" style="text-align: center">
               <img style="width: 100%" src="/images/profile.png">
-              <a style="display: block; width: 100%; padding-top: 5px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" href="/user/{{ posterUsername }}">{{ posterUsername }}</a>
+              <a style="display: block; width: 100%; padding-top: 5px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" href="/user/{{ posterUsername }}">
+                {{#posterIsAdmin}}
+                  <span style="color: #e84d30" title="Admin" data-toggle="tooltip" data-placement="right">{{ posterUsername }}</span>
+                {{/posterIsAdmin}}
+                {{^posterIsAdmin}}
+                  {{ posterUsername }}
+                {{/posterIsAdmin}}
+              </a>
             </div>
             <div style="padding-left: 20px; border-left: solid rgba(51, 51, 51, 0.11) 1px" class="col-sm-11 col-xs-9 pull-right">
               <small title="{{ formatedPostDate }}" data-toggle="tooltip" data-placement="top">{{ relativePostDate }}</small>

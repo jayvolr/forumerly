@@ -114,44 +114,67 @@ router
 
     var newReply = {
       posterUsername: req.user.username,
-      parentThread: req.params.id,
+      parentThreadID: new ObjectID.createFromHexString(req.params.id),
       message: req.body.message,
       creationDate: date
     }
 
+    if (req.user.admin) {
+      newReply.posterIsAdmin = true
+    }else {
+      newReply.posterIsAdmin = false
+    }
+
     mongo.db.collection('threads')
-      .updateOne({
-        _id: new ObjectID.createFromHexString(req.params.id)
-      },
-      {
-        $set: {
-          'lastPostBy': req.user.username,
-          'lastPostDate': date
-        },
-        $inc: {'numReplies': 1},
-        $addToSet: {'replies': newReply}
-      }, (err, result) => {
-        if (err){console.log(err)}else {
-          res.redirect('/thread/'+req.params.id)
-        }
+      .findOne({ _id: new ObjectID.createFromHexString(req.params.id) }, (err, result) => {
+        //res.send(result)
+        newReply.parentThreadSubject = result.subject
+        mongo.db.collection('replies')
+          .insert(newReply, (err, result) => {
+            if(err){console.log(err)}else {
+              res.redirect('/thread/'+req.params.id)
+            }
+          })
       })
+
+    mongo.db.collection('threads')
+      .updateOne({ _id: new ObjectID.createFromHexString(req.params.id) },{
+        $set: { 'lastPostBy': req.user.username, 'lastPostDate': date, 'lastPosterIsAdmin': newReply.posterIsAdmin },
+        $inc: { 'numReplies': 1 }
+      }, (err, result) => {
+        if (err){console.log(err)}
+      })
+
+
 
   })
   .get('/thread/:id', (req, res) => {
     mongo.db.collection('threads')
       .findOne({ _id: new ObjectID.createFromHexString(req.params.id) }, (err, thread) => {
-        if(err){console.log(err); res.sendStatus(500)}else {
-          var thread = parseSingleData(thread)
-          thread.category = getCategoryFromTopic(thread.topic).capitalizeFirstLetter()
-          thread.lcCategory = thread.category.toLowerCase()
-          thread.lcTopic = thread.topic
-          thread.topic = thread.topic.capitalizeFirstLetter()
-          if (thread.subject.length > 18) {
-            thread.browserTitle = thread.subject.slice(0, 15) + '...'
-          }else {
-            thread.browserTitle = thread.subject
-          }
-          res.render('thread', {thread: thread, message: req.flash('info')})
+        if(err){console.log(err); res.sendStatus(500)}else if(!!thread) {
+          var thread = thread
+          mongo.db.collection('replies')
+            .find({ parentThreadID: new ObjectID.createFromHexString(req.params.id) })
+            .sort({'lastPostDate': -1})
+            .toArray((err, result) => {
+              if(err){console.log(err)}else {
+                thread.replies = result
+                thread = parseSingleData(thread)
+                thread.category = getCategoryFromTopic(thread.topic).capitalizeFirstLetter()
+                thread.lcCategory = thread.category.toLowerCase()
+                thread.lcTopic = thread.topic
+                thread.topic = thread.topic.capitalizeFirstLetter()
+                if (thread.subject.length > 18) {
+                  thread.browserTitle = thread.subject.slice(0, 15) + '...'
+                }else {
+                  thread.browserTitle = thread.subject
+                }
+                //res.send(thread)
+                res.render('thread', {thread: thread, message: req.flash('info')})
+              }
+            })
+        }else {
+          res.status(404).send('thread not found')
         }
       })
   })
@@ -169,6 +192,14 @@ router
       lastPostDate: date,
       numReplies: 0,
       replies: []
+    }
+
+    if (req.user.admin) {
+      newThread.posterIsAdmin = true
+      newThread.lastPosterIsAdmin = true
+    }else {
+      newThread.posterIsAdmin = false
+      newThread.lastPosterIsAdmin = false
     }
 
     mongo.db.collection('threads')

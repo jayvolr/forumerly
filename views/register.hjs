@@ -20,10 +20,10 @@
           <input type="text" class="form-control" name="username" placeholder="Username">
         </div>
         <div class="form-group">
-          <input type="email" class="form-control" name="email" placeholder="Email">
+          <input type="password" class="form-control" name="password" placeholder="Password">
         </div>
         <div class="form-group">
-          <input type="password" class="form-control" name="password" placeholder="Password">
+          <input type="password" class="form-control" name="password2" placeholder="Password (repeat)">
         </div>
         <button type="submit" class="form-control btn-primary">Create Account</button>
       </form>

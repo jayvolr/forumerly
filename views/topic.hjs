@@ -35,10 +35,24 @@
           {{#threads}}
             <tr class="thread">
               <td><a class="no-link" href="/thread/{{ _id }}"><div class="text" style="height:100%;width:100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{ subject }}</div></a></td>
-              <td style="text-align: center"><a class="no-link" href="/user/{{ posterUsername }}"><div class="text" style="height:100%;width:100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{ posterUsername }}</div></a></td>
+              <td style="text-align: center"><a class="no-link" href="/user/{{ posterUsername }}"><div class="text" style="height:100%;width:100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+                {{#posterIsAdmin}}
+                  <span style="color: #e84d30" title="Admin" data-toggle="tooltip" data-placement="right">{{ posterUsername }}</span>
+                {{/posterIsAdmin}}
+                {{^posterIsAdmin}}
+                  {{ posterUsername }}
+                {{/posterIsAdmin}}
+              </div></a></td>
               <td style="text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{ numReplies }}</td>
               <td style="text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" title="{{ formatedPostDate }}" data-toggle="tooltip" data-placement="top">{{ relativePostDate }}</td>
-              <td style="text-align: center"><a class="no-link" href="/user/{{ posterUsername }}"><div class="text" style="height:100%;width:100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{ lastPostBy }}</div></a></td>
+              <td style="text-align: center"><a class="no-link" href="/user/{{ lastPostBy }}"><div class="text" style="height:100%;width:100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+                {{#lastPosterIsAdmin}}
+                  <span style="color: #e84d30" title="Admin" data-toggle="tooltip" data-placement="right">{{ lastPostBy }}</span>
+                {{/lastPosterIsAdmin}}
+                {{^lastPosterIsAdmin}}
+                  {{ lastPostBy }}
+                {{/lastPosterIsAdmin}}
+              </div></a></td>
               <td style="text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" title="{{ formatedLastPostDate }}" data-toggle="tooltip" data-placement="top">{{ relativeLastPostDate }}</td>
             </tr>
           {{/threads}}
