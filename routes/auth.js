@@ -12,8 +12,8 @@ router
     successFlash: 'Account created!'
   }))
   .post('/login', passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/',
+    successRedirect: 'back',
+    failureRedirect: 'back',
     failureFlash: true
   }))
   .get('/logout', (req, res) => {
