@@ -12,7 +12,7 @@ router
     successFlash: 'Account created!'
   }))
   .post('/login', passport.authenticate('local', {
-    successRedirect: 'back',
+    successRedirect: '/',
     failureRedirect: 'back',
     failureFlash: true
   }))

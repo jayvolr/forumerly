@@ -24,7 +24,7 @@
           <li title="Inbox"><a href="#"><i class="fa fa-inbox" aria-hidden="true"></i></a></li>
           <li title="Notifications"><a href="#"><i class="fa fa-bell" aria-hidden="true"></i></a></li>
           <li class="dropdown">
-            <a title="{{ user.username }}" style="margin-top: -2px; padding-bottom: 17px" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="/images/profile.png" height="17px"> <span class="caret"></span></a>
+            <a title="{{ user.username }}" style="margin-top: -2px; padding-bottom: 17px" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="{{user.img}}" height="17px"> <span class="caret"></span></a>
             <ul style="max-width: 170px; text-align: center" class="dropdown-menu">
               <li title="{{ user.username }}" style="text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding: 0 10px 0 10px" class="text-muted">Hi, {{ user.username }}</li>
               <li role="separator" class="divider"></li>

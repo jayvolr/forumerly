@@ -68,7 +68,7 @@ router
                     profile.replies = parseData(result)
                   }
                   //res.send(profile)
-                  res.render('profile', {user: profile, repliesTab: req.query.tab === 'replies'})
+                  res.render('profile', {profile: profile, repliesTab: req.query.tab === 'replies'})
                 })
             })
         }else {

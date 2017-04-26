@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>{{user.username}}</title>
+    <title>{{profile.username}}</title>
     <link rel="stylesheet" href="/css/master.css">
     {{>head}}
   </head>
@@ -10,23 +10,23 @@
     {{>navbar}}
       <div class="container">
         <div class="col-sm-3">
-          <img style="width: 90%; border-radius: 5px" src="{{user.img}}">
-          {{#user.admin}}
-            <h2><span style="color: #e84d30" title="Admin" data-toggle="tooltip" data-placement="right">{{user.username}}</span></h2>
-          {{/user.admin}}
-          {{^user.admin}}
-            <h2>{{user.username}}</h2>
-          {{/user.admin}}
-          {{#user.bio}}
-            <p class="text-muted">{{user.bio}}</p>
-          {{/user.bio}}
-          {{^user.bio}}
+          <img style="width: 90%; border-radius: 5px" src="{{profile.img}}">
+          {{#profile.admin}}
+            <h2><span style="color: #e84d30" title="Admin" data-toggle="tooltip" data-placement="right">{{profile.username}}</span></h2>
+          {{/profile.admin}}
+          {{^profile.admin}}
+            <h2>{{profile.username}}</h2>
+          {{/profile.admin}}
+          {{#profile.bio}}
+            <p class="text-muted">{{profile.bio}}</p>
+          {{/profile.bio}}
+          {{^profile.bio}}
             <p class="text-muted">Apparently this user likes to keep an air of mystery about themself.</p>
-          {{/user.bio}}
+          {{/profile.bio}}
           <hr>
           <ul style="list-style: none; padding-left: 0;">
-            <li><b>Join date: </b>{{user.joinDate}}</li>
-            <li><b>Post count: </b>{{user.postCount}}</li>
+            <li><b>Join date: </b>{{profile.joinDate}}</li>
+            <li><b>Post count: </b>{{profile.postCount}}</li>
           </ul>
         </div>
         <div>
@@ -46,7 +46,7 @@
                       <th style="width: 22%; text-align: center">Last Post By</th>
                       <th style="width: 20%; text-align: center">Last Post</th>
                     </tr>
-                    {{#user.threads}}
+                    {{#profile.threads}}
                       <tr class="thread">
                         <td><a class="no-link" href="/thread/{{ _id }}"><div class="text" style="height:100%;width:100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{ subject }}</div></a></td>
                         <td style="text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{ numReplies }}</td>
@@ -61,10 +61,10 @@
                         </div></a></td>
                         <td style="text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" title="{{ formatedLastPostDate }}" data-toggle="tooltip" data-placement="top">{{ relativeLastPostDate }}</td>
                       </tr>
-                    {{/user.threads}}
-                    {{^user.threads}}
+                    {{/profile.threads}}
+                    {{^profile.threads}}
                       <h3>This user hasn't created any threads.</h3>
-                    {{/user.threads}}
+                    {{/profile.threads}}
                   </table>
                 </div>
               </div>
@@ -75,7 +75,7 @@
               <li role="presentation" class="active"><a href="?tab=replies">Replies</a></li>
             </ul>
               <div class="col-sm-9">
-                {{#user.replies}}
+                {{#profile.replies}}
                 <div style="display: flex; overflow-wrap: break-word; height: 100%; width: 100%; padding-left: 0; margin-top: 10px" class="list-group-item pull-right">
                   <div class="col-sm-2 col-xs-3" style="text-align: center">
                     <img style="width: 100%" src="/images/profile.png">
@@ -94,10 +94,10 @@
                     <p style="white-space: pre-wrap" class="lead">{{ message }}</p>
                   </div>
                 </div>
-                {{/user.replies}}
-                {{^user.replies}}
+                {{/profile.replies}}
+                {{^profile.replies}}
                   <h3 class="text-muted">This user hasn't replied to any threads.</h3>
-                {{/user.replies}}
+                {{/profile.replies}}
               </div>
             {{/repliesTab}}
 
