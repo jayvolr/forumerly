@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Settings</title>
+    <link rel="stylesheet" href="/css/master.css">
+    {{>head}}
+  </head>
+  <body>
+    {{>navbar}}
+    <div class="container">
+      {{#success}}
+        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{.}}</div>
+      {{/success}}
+      {{#error}}
+        <div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{.}}</div>
+      {{/error}}
+      <div class="col-sm-6">
+        <h2>Profile</h2>
+        <hr>
+        <div class="col-sm-5">
+          <h4>Profile picture</h4>
+          <img style="width: 100%; margin-bottom: 15px" src="{{user.img}}">
+          <br>
+          <input id="upload-input" type="file" name="upload">
+          <button class="btn btn-default upload-btn" role="button">Upload new picture</button>
+        </div>
+        <div class="col-sm-10">
+          <h4>Bio</h4>
+          <form action="/updateBio" method="post">
+            <div class="form-group">
+              <textarea rows="3" type="text" class="form-control" name="bio"></textarea>
+            </div>
+            <button type="submit" class="btn btn-default">Update bio</button>
+          </form>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <h2>Account</h2>
+        <hr>
+        <h4>Change password</h4>
+        <form action="/changePassword" method="post">
+          <div class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="Current password">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" name="newPassword" placeholder="New password">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" name="newPassword2" placeholder="New password (repeat)">
+          </div>
+          <button type="submit" class="btn btn-default">Change password</button>
+        </form>
+        <hr>
+        <h4>Delete account</h4>
+        <form action="/deleteAccount" method="post">
+          <div class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-danger">Delete account</button>
+        </form>
+      </div>
+    </div>
+    {{>footer}}
+  </body>
+</html>

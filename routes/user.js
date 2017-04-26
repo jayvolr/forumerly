@@ -1,10 +1,19 @@
 const express = require('express')
 const router = express.Router()
 const mongo = require('../db')
+const bcrypt = require('bcrypt-nodejs');
 const moment = require('moment-timezone')
-const fs = require('fs')
+
 
 moment.tz.setDefault("America/New_York")
+
+function loginRequired(req, res, next) {
+  if (!req.isAuthenticated()) {
+    req.flash('info', 'You must be logged in to perform that action.')
+    return res.redirect('back')
+  }
+  next()
+}
 
 function parseData(data) {
   data.forEach((i) => {
@@ -67,8 +76,12 @@ router
                   }else {
                     profile.replies = parseData(result)
                   }
+                  var bool = false
+                  if (req.user) {
+                    bool = (profile.username === req.user.username)
+                  }
                   //res.send(profile)
-                  res.render('profile', {profile: profile, repliesTab: req.query.tab === 'replies'})
+                  res.render('profile', {profile: profile, repliesTab: req.query.tab === 'replies', viewerIsOwner: bool})
                 })
             })
         }else {
@@ -76,5 +89,69 @@ router
         }
       })
   })
+  .get('/settings', loginRequired, (req, res) => {
+    res.render('settings', {error: req.flash('error'), success: req.flash('success')})
+  })
+  .post('/updateBio', loginRequired, (req, res) => {
+    mongo.db.collection('users')
+      .updateOne({lcUsername: req.user.lcUsername}, {
+        $set: {'bio': req.body.bio}
+      }, (err, result) => {
+        if(err){ console.log(err)}else {
+          req.flash('success', 'Your bio has been updated.')
+          res.redirect('/settings')
+        }
+      })
+  })
+  .post('/changePassword', loginRequired, (req, res) => {
+    if (req.body.newPassword === req.body.newPassword2) {
+      mongo.db.collection('users')
+        .findOne({lcUsername: req.user.lcUsername}, (err, result) => {
+          if(err){ console.log(err)}else {
+            if (bcrypt.compareSync(req.body.password, result.password)) {
+              mongo.db.collection('users')
+                .updateOne({lcUsername: req.user.lcUsername}, {
+                  $set: {password: bcrypt.hashSync(req.body.newPassword)}
+                }, (err, result) => {
+                  if(err){ console.log(err)}else {
+                    req.flash('success', 'Your password has been updated!')
+                    res.redirect('/settings')
+                  }
+                })
+            }else {
+              req.flash('error', 'Incorrect current password.')
+              res.redirect('/settings')
+            }
+          }
+        })
+
+    }else {
+      req.flash('error', 'Passwords do not match.')
+      res.redirect('/settings')
+    }
+  })
+  .post('/deleteAccount', loginRequired, (req, res) => {
+    mongo.db.collection('users')
+      .findOne({lcUsername: req.user.lcUsername}, (err, result) => {
+        if(err){ console.log(err)}else {
+          if (bcrypt.compareSync(req.body.password, result.password)) {
+            mongo.db.collection('users')
+              .deleteOne({lcUsername: req.user.lcUsername}, (err, result) => {
+                if(err){ console.log(err)}else {
+                  req.flash('success', 'Your account has been deleted.')
+                  res.redirect('/logout')
+                }
+              })
+          }else {
+            req.flash('error', 'Incorrect password.')
+            res.redirect('/settings')
+          }
+        }
+      })
+  })
+  .post('/upload', (req, res) => {
+
+  })
+
 
 module.exports = router

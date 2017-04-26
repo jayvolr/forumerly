@@ -28,13 +28,13 @@ app
   .use(passport.session())
   .use(flash())
   .use((req, res, next) => {
+    if (req.user) {
+      app.locals.user = req.user
+    }
     app.locals.authenticated = req.isAuthenticated()
     next()
   })
   .get('/', (req, res) => {
-    if (req.user) {
-      app.locals.user = req.user
-    }
     res.render('forumHome', {user: req.user, error: req.flash('error'), success: req.flash('success')})
   })
   .get('/register', (req, res) => {

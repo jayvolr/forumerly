@@ -12,13 +12,17 @@ router
     successFlash: 'Account created!'
   }))
   .post('/login', passport.authenticate('local', {
-    successRedirect: '/',
+    successRedirect: 'back',
     failureRedirect: 'back',
     failureFlash: true
   }))
   .get('/logout', (req, res) => {
     req.logout()
-    if(req.header("Referer") === 'http://localhost:3000/other/admins' || req.header("Referer") === 'http://forumerly.jayvolr.com/other/admins') {
+    if(req.header("Referer") === 'http://localhost:3000/other/admins'
+    || req.header("Referer") === 'http://forumerly.jayvolr.com/other/admins'
+    || req.header("Referer") === 'http://localhost:3000/settings'
+    || req.header("Referer") === 'http://forumerly.jayvolr.com/settings'
+    ) {
       res.redirect('/')
     }else {
       res.redirect('back')

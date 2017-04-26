@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>{{ thread.browserTitle }}</title>
+    <link rel="stylesheet" href="/css/master.css">
     {{> head }}
   </head>
   <body>
@@ -38,8 +39,8 @@
         </div>
         {{#thread.replies}}
           <div style="display: flex; overflow-wrap: break-word; height: 100%; width: 100%; padding-left: 0" class="list-group-item pull-right">
-            <div class="col-sm-1 col-xs-3" style="text-align: center">
-              <img style="width: 100%" src="/images/profile.png">
+            <div class="col-sm-15 col-xs-3" style="text-align: center">
+              <img style="width: 70%" src="/images/profile.png">
               <a style="display: block; width: 100%; padding-top: 5px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" href="/user/{{ posterUsername }}">
                 {{#posterIsAdmin}}
                   <span style="color: #e84d30" title="Admin" data-toggle="tooltip" data-placement="right">{{ posterUsername }}</span>

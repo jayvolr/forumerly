@@ -15,9 +15,23 @@
   color: #555;
 }
 
-.replyDisplay{
-  padding: 10px;
-  margin-top: 10px;
-  min-height: 85px;
-  border: 1px solid #e7e7e7;
+h2 {
+  font-size: 23px !important;
+}
+
+.col-sm-15 {
+  width: 12% !important;
+}
+
+#upload-input {
+  display: none;
+}
+
+.notificationsContainer {
+  min-height: 100px;
+}
+
+.notifFiller {
+  height: 100px;
+  line-height: 100px;
 }
