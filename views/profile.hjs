@@ -78,7 +78,7 @@
                   </table>
                 </div>
                 {{^profile.threads}}
-                  <h3>This user hasn't created any threads yet.</h3>
+                  <h3 class="text-muted">This user hasn't created any threads yet.</h3>
                 {{/profile.threads}}
               </div>
             {{/repliesTab}}
