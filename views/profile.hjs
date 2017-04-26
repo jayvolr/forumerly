@@ -10,7 +10,7 @@
     {{>navbar}}
       <div class="container">
         <div class="col-sm-3">
-          <img style="width: 90%" src="{{user.img}}">
+          <img style="width: 90%; border-radius: 5px" src="{{user.img}}">
           {{#user.admin}}
             <h2><span style="color: #e84d30" title="Admin" data-toggle="tooltip" data-placement="right">{{user.username}}</span></h2>
           {{/user.admin}}
@@ -78,7 +78,7 @@
                 {{#user.replies}}
                 <div style="display: flex; overflow-wrap: break-word; height: 100%; width: 100%; padding-left: 0; margin-top: 10px" class="list-group-item pull-right">
                   <div class="col-sm-2 col-xs-3" style="text-align: center">
-                    <img style="width: 100%; border-radius: 5px" src="/images/profile.png">
+                    <img style="width: 100%" src="/images/profile.png">
                     <a style="display: block; width: 100%; padding-top: 5px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" href="/user/{{ posterUsername }}">
                       {{#posterIsAdmin}}
                         <span style="color: #e84d30" title="Admin" data-toggle="tooltip" data-placement="right">{{ posterUsername }}</span>
