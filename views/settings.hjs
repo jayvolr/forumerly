@@ -15,7 +15,8 @@
       {{#error}}
         <div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{.}}</div>
       {{/error}}
-      <div class="col-sm-6">
+      <a class="btn btn-default pull-right" href="/user/{{user.username}}" role="button">View profile</a>
+      <div style="margin-top: 38px" class="col-sm-6">
         <h2>Profile</h2>
         <hr>
         <div class="col-sm-5">
