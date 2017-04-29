@@ -23,7 +23,15 @@ h2 {
   width: 12% !important;
 }
 
-#upload-input {
+#file-selector {
+  display: none;
+}
+
+#profile-img:hover {
+  cursor: pointer;
+}
+
+#upload-button {
   display: none;
 }
 
@@ -34,4 +42,8 @@ h2 {
 .notifFiller {
   height: 100px;
   line-height: 100px;
+}
+
+.profilePicture {
+  border-radius: 5px;
 }

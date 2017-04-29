@@ -1,8 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const mongo = require('../db')
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcrypt-nodejs')
 const moment = require('moment-timezone')
+const fs = require('fs')
+const multer = require('multer')
+const upload = multer({dest: 'public/images/profileImages', limits: {fileSize: 2000000}})
 
 
 moment.tz.setDefault("America/New_York")
@@ -149,8 +152,18 @@ router
         }
       })
   })
-  .post('/upload', (req, res) => {
-
+  .post('/upload', upload.single('avatar'), (req, res) => {
+    fs.rename(req.file.path, req.file.destination + '/' + req.user.username, (err) => {
+      if (err) throw err;
+      mongo.db.collection('users')
+        .updateOne({username: req.user.username}, {
+          $set: {img: '/images/profileImages/' + req.user.username}
+        }, (err, result) => {
+          if (err) {throw err}else {
+            res.redirect('back')
+          }
+        })
+    })
   })
 
 

@@ -19,7 +19,7 @@
         {{/viewerIsOwner}}
         <div class="col-sm-4 col-xs-12">
           <div class="col-sm-12 col-xs-6">
-            <img style="width: 80%; border-radius: 5px" src="{{profile.img}}">
+            <img class="profilePicture" style="width: 80%" src="{{profile.img}}">
           </div>
           <div class="col-sm-10 col-xs-6">
             {{#profile.admin}}
