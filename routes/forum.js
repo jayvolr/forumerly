@@ -71,8 +71,10 @@ function parseSingleData(data) {
   data.formatedLastPostDate = moment(data.lastPostDate).calendar()
   data.relativePostDate = moment(data.creationDate).startOf('minute').fromNow()
   data.relativeLastPostDate = moment(data.lastPostDate).startOf('minute').fromNow()
+  data.posterImg = '/images/profileImages/'+data.posterUsername
   if (data.replies) {
     data.replies.forEach((i) => {
+      i.posterImg = '/images/profileImages/'+i.posterUsername
       i.formatedPostDate = moment(i.creationDate).calendar()
       i.relativePostDate = moment(i.creationDate).startOf('minute').fromNow()
     })
@@ -114,6 +116,7 @@ router
 
     var newReply = {
       posterUsername: req.user.username,
+      posterImg: req.user.img,
       parentThreadID: new ObjectID.createFromHexString(req.params.id),
       message: req.body.message,
       creationDate: date
