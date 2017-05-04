@@ -22,14 +22,6 @@
       <ul class="nav navbar-nav navbar-right">
         {{#authenticated}}
           <li class="dropdown">
-            <a title="Notifications" style="margin-top: -2px; padding-right: 5px" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell" aria-hidden="true"></i> <span class="caret"></span></a>
-            <ul style="max-width: 170px; text-align: center" class="dropdown-menu">
-              <li><div class="notificationsContainer">
-                <span class="text-muted notifFiller">No notifications!</span>
-              </div></li>
-            </ul>
-          </li>
-          <li class="dropdown">
             <a title="{{ user.username }}" style="margin-top: -2px; padding-bottom: 17px" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="{{user.img}}" height="17px"> <span class="caret"></span></a>
             <ul style="max-width: 170px; text-align: center" class="dropdown-menu">
               <li title="{{ user.username }}" style="text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding: 0 10px 0 10px" class="text-muted">Hi, {{ user.username }}</li>

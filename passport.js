@@ -1,3 +1,4 @@
+// Passport.js logic
 const mongo = require('./db')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
@@ -12,6 +13,7 @@ passport.use("local-register", new LocalStrategy({
   passReqToCallback: true
 }, register))
 
+// Called by auth.js via passport when a user attempts to login
 function authenticate(req, username, password, done) {
   mongo.db.collection("users")
     .findOne({ lcUsername: username.toLowerCase() }, {collation: {locale: "en", strength: 2}}, (err, user) => {
@@ -23,8 +25,9 @@ function authenticate(req, username, password, done) {
     })
 }
 
+// Called by auth.js via passport when a user attempts to create a new account
 function register(req, username, password, done) {
-
+  // Password and username validation
   if (password !== req.body.password2) {
     return done(null, false, { message: 'Passwords do not match.' })
   }else if (username.length > 20) {
@@ -34,6 +37,7 @@ function register(req, username, password, done) {
   }
 
   var date = new Date()
+  // Checks if username is already in use
   mongo.db.collection('users')
     .findOne({ lcUsername: username.toLowerCase() }, {collation: {locale: "en", strength: 2}}, (err, user) => {
       if (err) {return done(err)}
@@ -41,7 +45,7 @@ function register(req, username, password, done) {
         console.log('username catch')
         return done(null, false, {message:'Username is already in use.'})
       }
-
+      // Past here will only run if the username was found to be not in use
       var newUser = {
         username: req.body.username,
         lcUsername: req.body.username.toLowerCase(),
@@ -50,6 +54,7 @@ function register(req, username, password, done) {
         img: '/images/profile.png'
       }
 
+      // Insert the new username into the database
       mongo.db.collection('users')
         .insert(newUser, (err, result) => {
           if (err) {return done(err)}
@@ -59,6 +64,7 @@ function register(req, username, password, done) {
     })
 }
 
+// Passport serialize and deserialize functions
 passport.serializeUser(function(user, done) {
   done(null, user._id.toHexString())
 })

@@ -1,15 +1,18 @@
+// Routes for topic and threads pages
 const express = require('express')
 const router = express.Router()
 const mongo = require('../db')
 const ObjectID = require('mongodb').ObjectID
 const moment = require('moment-timezone')
 
-moment.tz.setDefault("America/New_York")
+moment.tz.setDefault("America/New_York") // All formated times will be in this timezone by default
 
+// Function to capitalize the first letter of a string (used for usernames)
 String.prototype.capitalizeFirstLetter = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
+// Dictionary of topics and their corresponding categories
 var topics = {
   'meta': 'general',
   'discussion': 'general',
@@ -22,7 +25,7 @@ var topics = {
   'admins': 'other'
 }
 
-
+// Middleware requiring the user to be authenticated
 function loginRequired(req, res, next) {
   if (!req.isAuthenticated()) {
     req.flash('info', 'You must be logged in to perform that action.')
@@ -31,6 +34,7 @@ function loginRequired(req, res, next) {
   next()
 }
 
+// Middleware requiring the user to be an administrator
 function adminRequired(req, res, next) {
   if (req.isAuthenticated()) {
     if (!req.user.admin) {
@@ -44,6 +48,8 @@ function adminRequired(req, res, next) {
   }
 }
 
+// Helper functions
+
 function getCategoryFromTopic(topic) {
   return topics[topic]
 }
@@ -56,7 +62,8 @@ function categoryExists(category) {
   return Object.values(topics).includes(category)
 }
 
-function parseData(data) {
+// Formats dates for each object inside an array (the objects in the array being individual threads)
+function formatThreadDates(data) {
   data.forEach((i) => {
     i.formatedPostDate = moment(i.creationDate).calendar()
     i.formatedLastPostDate = moment(i.lastPostDate).calendar()
@@ -66,7 +73,8 @@ function parseData(data) {
   return data
 }
 
-function parseSingleData(data) {
+// Formats all the dates inside of a single object (the object being a single thread)
+function formatSingleObject(data) {
   data.formatedPostDate = moment(data.creationDate).calendar()
   data.formatedLastPostDate = moment(data.lastPostDate).calendar()
   data.relativePostDate = moment(data.creationDate).startOf('minute').fromNow()
@@ -83,34 +91,44 @@ function parseSingleData(data) {
 }
 
 
-
 router
+  // GET createThread page for the "Admins" topic specifically
   .get('/createThread/admins', loginRequired, adminRequired, (req, res) => {
     res.render('newThread', {lcCategory: 'other', category: 'Other', lcTopic: 'admins', topic: 'Admins'})
   })
+
+  // GET createThread page for the specified topic
   .get('/createThread/:topic', loginRequired, (req, res) => {
+    // Render the page only if the topic exists
     if (topicExists(req.params.topic)) {
       res.render('newThread', {lcCategory: getCategoryFromTopic(req.params.topic), category: getCategoryFromTopic(req.params.topic).capitalizeFirstLetter(), lcTopic: req.params.topic, topic: req.params.topic.capitalizeFirstLetter(), message: req.flash('info')})
     }else {
       res.sendStatus(404)
     }
   })
+
+  // GET createThread page for the specified thread via id
   .get('/createReply/:id', loginRequired, (req, res) => {
+    // Find the thread in the database
     mongo.db.collection('threads')
       .findOne({ _id: new ObjectID.createFromHexString(req.params.id) }, (err, thread) => {
         if(err){console.log(err)}else {
+          // If it exists format some of its data and render the reply page
           if (thread !== undefined) {
             thread.category = getCategoryFromTopic(thread.topic).capitalizeFirstLetter()
             thread.lcCategory = thread.category.toLowerCase()
             thread.lcTopic = thread.topic
             thread.topic = thread.topic.capitalizeFirstLetter()
             res.render('createReply', {thread: thread, message: req.flash('info')})
+          // If it doesn't exist send 404 status
           }else {
             res.sendStatus(404)
           }
         }
       })
   })
+
+  // POST new reply to specified thread id
   .post('/createReply/:id', loginRequired, (req, res) => {
     var date = new Date()
 
@@ -128,10 +146,11 @@ router
       newReply.posterIsAdmin = false
     }
 
+    // Make sure the thread exists in the database
     mongo.db.collection('threads')
       .findOne({ _id: new ObjectID.createFromHexString(req.params.id) }, (err, result) => {
-        //res.send(result)
         newReply.parentThreadSubject = result.subject
+        // Add reply to database and redirect to thread
         mongo.db.collection('replies')
           .insert(newReply, (err, result) => {
             if(err){console.log(err)}else {
@@ -140,6 +159,7 @@ router
           })
       })
 
+    // Update the dates and numReplies of the thread
     mongo.db.collection('threads')
       .updateOne({ _id: new ObjectID.createFromHexString(req.params.id) },{
         $set: { 'lastPostBy': req.user.username, 'lastPostDate': date, 'lastPosterIsAdmin': newReply.posterIsAdmin },
@@ -148,21 +168,24 @@ router
         if (err){console.log(err)}
       })
 
-
-
   })
+
+  // GET thread by id
   .get('/thread/:id', (req, res) => {
+    // Find the thread
     mongo.db.collection('threads')
       .findOne({ _id: new ObjectID.createFromHexString(req.params.id) }, (err, thread) => {
-        if(err){console.log(err); res.sendStatus(500)}else if(!!thread) {
+        if(err){console.log(err); res.sendStatus(500)}else if(!!thread) { // If thread is found
           var thread = thread
+          // Find the thread's replies
           mongo.db.collection('replies')
             .find({ parentThreadID: new ObjectID.createFromHexString(req.params.id) })
             .sort({'lastPostDate': -1})
             .toArray((err, result) => {
               if(err){console.log(err)}else {
+                // Date formatting and adition information
                 thread.replies = result
-                thread = parseSingleData(thread)
+                thread = formatSingleObject(thread)
                 thread.category = getCategoryFromTopic(thread.topic).capitalizeFirstLetter()
                 thread.lcCategory = thread.category.toLowerCase()
                 thread.lcTopic = thread.topic
@@ -172,17 +195,18 @@ router
                 }else {
                   thread.browserTitle = thread.subject
                 }
-                //res.send(thread)
+                // Render thread
                 res.render('thread', {thread: thread, message: req.flash('info')})
               }
             })
-        }else {
+        }else { // If thread is not found, send 404 status
           res.status(404).send('thread not found')
         }
       })
   })
-  .post('/createThread', loginRequired, (req, res) => {
 
+  // POST new thread
+  .post('/createThread', loginRequired, (req, res) => {
     var date = new Date()
 
     var newThread = {
@@ -205,6 +229,7 @@ router
       newThread.lastPosterIsAdmin = false
     }
 
+    // Add thread to database
     mongo.db.collection('threads')
       .insert(newThread, (err, result) => {
         if (err) {console.log(err)}else {
@@ -213,6 +238,8 @@ router
         }
       })
   })
+
+  // Category routes
   .get('/general', (req, res) => {
     res.render('general')
   })
@@ -222,6 +249,8 @@ router
   .get('/other', (req, res) => {
     res.render('other', {error: req.flash('error')})
   })
+
+  // Route specifically for the Admins topic
   .get('/other/admins', adminRequired, (req, res) => {
     mongo.db.collection('threads')
       .find({topic: 'admins'})
@@ -229,7 +258,7 @@ router
       .toArray((err, result) => {
         if (err) {console.log(err)}else {
           if (result.length > 0) {
-            var parsedResult = parseData(result)
+            var parsedResult = formatThreadDates(result)
             res.render('topic', {bool: true, threads: parsedResult, lcTopic: 'admins', topic: 'Admins', lcCategory: 'other', category: 'Other'})
           }else {
             res.render('topic', {bool: false, lcTopic: 'admins', topic: 'Admins', lcCategory: 'other', category: 'Other'})
@@ -237,26 +266,31 @@ router
         }
       })
   })
-  .get('/:category/:topic', (req, res) => {
-    if (topicExists(req.params.topic)) {
 
+  // Topic page for the specified category and topic
+  .get('/:category/:topic', (req, res) => {
+    // Make sure topic exists
+    if (topicExists(req.params.topic)) {
       mongo.db.collection('threads')
         .find({topic: req.params.topic})
+        // Sort by lastPostDate
         .sort({'lastPostDate': -1})
         .toArray((err, result) => {
           if (err) {console.log(err)}else {
+            // Render topic
             if (result.length > 0) {
-              var parsedResult = parseData(result)
+              var parsedResult = formatThreadDates(result)
               res.render('topic', {bool: true, threads: parsedResult, lcTopic: req.params.topic, topic: req.params.topic.capitalizeFirstLetter(), lcCategory: req.params.category,category: req.params.category.capitalizeFirstLetter(), message: req.flash('info')})
             }else {
               res.render('topic', {bool: false, lcTopic: req.params.topic, topic: req.params.topic.capitalizeFirstLetter(), lcCategory: req.params.category,category: req.params.category.capitalizeFirstLetter(), message: req.flash('info')})
             }
           }
         })
-
+    // If topic does NOT exist, send 404
     }else {
       res.sendStatus(404)
     }
   })
 
+// Export these routes to be used in app.js
 module.exports = router
