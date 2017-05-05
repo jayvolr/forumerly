@@ -20,7 +20,7 @@ passport.use("local-register", new LocalStrategy({
 passport.use(new GoogleStrategy({
     clientID: secrets.googleClientID,
     clientSecret: secrets.googleClientSecret,
-    callbackURL: "http://127.0.0.1:3000/auth/google/callback"
+    callbackURL: "http://forumerly.jayvolr.me/auth/google/callback"
   },
   function (accessToken, refreshToken, profile, done) {
     var date = new Date()
