@@ -5,6 +5,7 @@ const LocalStrategy = require('passport-local').Strategy
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 const ObjectID = require('mongodb').ObjectID
 const bcrypt = require('bcrypt-nodejs')
+const secrets = require('./secrets')
 
 // Local login/signup (username and password)
 passport.use(new LocalStrategy({
@@ -17,8 +18,8 @@ passport.use("local-register", new LocalStrategy({
 
 // Google OAuth 2.0 strategey
 passport.use(new GoogleStrategy({
-    clientID: '878485820100-dd23j4okkj0mqceb0bekt88rntbji3k9.apps.googleusercontent.com',
-    clientSecret: 'JjCJyJiOGG7dssboKKxaoAd2',
+    clientID: secrets.googleClientID,
+    clientSecret: secrets.googleClientSecret,
     callbackURL: "http://127.0.0.1:3000/auth/google/callback"
   },
   function (accessToken, refreshToken, profile, done) {
