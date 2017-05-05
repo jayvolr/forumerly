@@ -2,9 +2,11 @@
 const mongo = require('./db')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
+const GoogleStrategy = require('passport-google-oauth20').Strategy
 const ObjectID = require('mongodb').ObjectID
 const bcrypt = require('bcrypt-nodejs')
 
+// Local login/signup (username and password)
 passport.use(new LocalStrategy({
   passReqToCallback: true
 }, authenticate))
@@ -12,6 +14,36 @@ passport.use(new LocalStrategy({
 passport.use("local-register", new LocalStrategy({
   passReqToCallback: true
 }, register))
+
+// Google OAuth 2.0 strategey
+passport.use(new GoogleStrategy({
+    clientID: '878485820100-dd23j4okkj0mqceb0bekt88rntbji3k9.apps.googleusercontent.com',
+    clientSecret: 'JjCJyJiOGG7dssboKKxaoAd2',
+    callbackURL: "http://127.0.0.1:3000/auth/google/callback"
+  },
+  function (accessToken, refreshToken, profile, done) {
+    var date = new Date()
+    mongo.db.collection('users')
+      .findOne({ oauth_provider: 'google', oauth_id: profile.id }, (err, result) => {
+        if (result) {
+          done(null, result)
+        }else {
+          var newUser = {
+            oauth_provider: 'google',
+            oauth_id: profile.id,
+            username: profile.displayName,
+            lcUsername: profile.displayName.toLowerCase(),
+            joinDate: date,
+            img: profile.photos[0].value + '0'
+          }
+          mongo.db.collection('users')
+            .insert(newUser, (err, result) => {
+              return done(null, result.ops[0])
+            })
+        }
+      })
+  }
+))
 
 // Called by auth.js via passport when a user attempts to login
 function authenticate(req, username, password, done) {

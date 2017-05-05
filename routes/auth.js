@@ -21,6 +21,13 @@ router
     failureFlash: true
   }))
 
+  // Google OAuth routes
+  .get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] })) 
+
+  .get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/register' }), (req, res) => {
+      res.redirect('/')
+  })
+
   // GET Logout and redirect
   .get('/logout', (req, res) => {
     req.logout()
