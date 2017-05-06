@@ -27,7 +27,32 @@
         </div>
         <button type="submit" class="form-control btn-primary">Create Account</button>
         <hr>
-        <a href="/auth/google">Sign in with Google</a>
+        <!-- Start google sign in -->
+        <div style="width: 240px; margin: 0 auto">
+          <div id="my-signin2"></div>
+        </div>
+        <script>
+          function onSuccess(googleUser) {
+            console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+          }
+          function onFailure(error) {
+            console.log(error);
+          }
+          function renderButton() {
+            gapi.signin2.render('my-signin2', {
+              'scope': 'profile email',
+              'width': 240,
+              'height': 50,
+              'longtitle': true,
+              'theme': 'dark',
+              'onsuccess': onSuccess,
+              'onfailure': onFailure
+            });
+          }
+        </script>
+
+        <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+        <!-- End google sign in -->
       </form>
       <div class="col-sm-3"></div>
     </div>

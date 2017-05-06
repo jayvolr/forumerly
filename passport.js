@@ -24,10 +24,13 @@ passport.use(new GoogleStrategy({
   },
   function (accessToken, refreshToken, profile, done) {
     var date = new Date()
+    // Search for user with given google user id
     mongo.db.collection('users')
       .findOne({ oauth_provider: 'google', oauth_id: profile.id }, (err, result) => {
+        // If they exist (have signed in before), return that user
         if (result) {
           done(null, result)
+        // Else, create the user
         }else {
           var newUser = {
             oauth_provider: 'google',
