@@ -69,6 +69,16 @@ function formatThreadDates(data) {
     i.formatedLastPostDate = moment(i.lastPostDate).calendar()
     i.relativeLastPostDate = moment(i.lastPostDate).startOf('minute').fromNow()
     i.relativePostDate = moment(i.creationDate).startOf('minute').fromNow()
+    i.posterImg = '/images/profileImages/'+i.posterUsername
+  })
+  return data
+}
+
+function formatRepliesDates(data) {
+  data.forEach((i) => {
+    i.formatedPostDate = moment(i.creationDate).calendar()
+    i.relativePostDate = moment(i.creationDate).startOf('minute').fromNow()
+    i.posterImg = '/images/profileImages/'+i.posterUsername
   })
   return data
 }
@@ -90,8 +100,29 @@ function formatSingleObject(data) {
   return data
 }
 
+// Returns an escaped regex
+function fuzzyText(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
+}
 
 router
+  // Search for threads/replies via search box on nav bar
+  .get('/search', (req, res) => {
+    var fuzzyQuery = new RegExp(fuzzyText(req.query.query), 'gi')
+    mongo.db.collection('threads')
+      .find({ $or: [{ body: fuzzyQuery }, { subject: fuzzyQuery }, { posterUsername: fuzzyQuery }] })
+      .toArray((err, matchingThreads) => {
+        matchingThreads = formatThreadDates(matchingThreads)
+        mongo.db.collection('replies')
+          .find({ $or: [{ message: fuzzyQuery }, { posterUsername: fuzzyQuery }] })
+          .toArray((err, matchingReplies) => {
+            matchingReplies = formatRepliesDates(matchingReplies)
+            // res.send(matchingThreads.concat(matchingReplies))
+            res.render('search', {query: req.query.query, numResults: matchingThreads.length + matchingReplies.length, threads: matchingThreads, replies: matchingReplies})
+          })
+      })
+  })
+
   // GET createThread page for the "Admins" topic specifically
   .get('/createThread/admins', loginRequired, adminRequired, (req, res) => {
     res.render('newThread', {lcCategory: 'other', category: 'Other', lcTopic: 'admins', topic: 'Admins'})
@@ -196,6 +227,7 @@ router
                   thread.browserTitle = thread.subject
                 }
                 // Render thread
+                // res.send(thread)
                 res.render('thread', {thread: thread, message: req.flash('info')})
               }
             })

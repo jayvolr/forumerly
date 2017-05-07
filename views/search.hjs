@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{ query }} - Forumerly Search</title>
+    {{>head}}
+  </head>
+  <body>
+    {{>navbar}}
+    <div class="container">
+      <h1>Search <small>{{ numResults }} results</small></h1>
+      <hr>
+      <div class="list-group">
+        <h2>Threads:</h2> {{^threads}}<p>None found</p>{{/threads}}
+        {{#threads}}
+          <div style="font-size: 20px; display: block; width: inherit; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; margin-top: 15px" class="list-group-item active"><a class="no-link" style="display: block; width: 100%; height: 100%; color: white" href="/thread/{{_id}}">{{ subject }}</a></div>
+          <div style="margin-bottom: 20px; display: flex; overflow-wrap: break-word; height: 100%; width: 100%; padding-left: 0" class="list-group-item pull-right">
+            <div style="width: 15%; text-align: center;">
+              <img style="width: 70%" src="{{ posterImg }}" onerror="this.src='/images/profile.png'">
+              <a style="display: block; width: 100%; padding-top: 5px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" href="/user/{{ thread.posterUsername }}">
+                {{#posterIsAdmin}}
+                  <span style="color: #e84d30" title="Admin" data-toggle="tooltip" data-placement="right">{{ posterUsername }}</span>
+                {{/posterIsAdmin}}
+                {{^posterIsAdmin}}
+                  {{ posterUsername }}
+                {{/posterIsAdmin}}
+              </a>
+            </div>
+            <div style="width: 85%; padding-left: 20px; border-left: solid rgba(51, 51, 51, 0.11) 1px">
+              <small title="{{ formatedPostDate }}" data-toggle="tooltip" data-placement="top">{{ relativePostDate }}</small>
+              <p style="white-space: pre-wrap" class="lead">{{ body }}</p>
+            </div>
+          </div>
+        {{/threads}}
+        <hr>
+        <h2>Replies:</h2> {{^replies}}<p>None found</p>{{/replies}}
+        {{#replies}}
+          <div style="display: flex; overflow-wrap: break-word; height: 100%; width: 100%; padding-left: 0; margin-top: 15px" class="list-group-item pull-right">
+            <div style="width: 12%; text-align: center">
+              <img style="width: 70%" src="{{ posterImg }}" onerror="this.src='/images/profile.png'">
+              <a style="display: block; width: 100%; padding-top: 5px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" href="/user/{{ thread.posterUsername }}">
+                {{#posterIsAdmin}}
+                  <span style="color: #e84d30" title="Admin" data-toggle="tooltip" data-placement="right">{{ posterUsername }}</span>
+                {{/posterIsAdmin}}
+                {{^posterIsAdmin}}
+                  {{ posterUsername }}
+                {{/posterIsAdmin}}
+              </a>
+            </div>
+            <div style="width: 88%; padding-left: 20px; border-left: solid rgba(51, 51, 51, 0.11) 1px">
+              <a href="/thread/{{parentThreadID}}">{{parentThreadSubject}}</a><br>
+              <small title="{{ formatedPostDate }}" data-toggle="tooltip" data-placement="top">{{ relativePostDate }}</small>
+              <p style="white-space: pre-wrap" class="lead">{{ message }}</p>
+            </div>
+          </div>
+        {{/replies}}
+      </div>
+    </div>
+    {{>footer}}
+  </body>
+</html>
