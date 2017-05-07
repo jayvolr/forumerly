@@ -17,7 +17,7 @@
           <div style="margin-bottom: 20px; display: flex; overflow-wrap: break-word; height: 100%; width: 100%; padding-left: 0" class="list-group-item pull-right">
             <div style="width: 15%; text-align: center;">
               <img style="width: 70%" src="{{ posterImg }}" onerror="this.src='/images/profile.png'">
-              <a style="display: block; width: 100%; padding-top: 5px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" href="/user/{{ thread.posterUsername }}">
+              <a style="display: block; width: 100%; padding-top: 5px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" href="/user/{{ posterUsername }}">
                 {{#posterIsAdmin}}
                   <span style="color: #e84d30" title="Admin" data-toggle="tooltip" data-placement="right">{{ posterUsername }}</span>
                 {{/posterIsAdmin}}
@@ -38,7 +38,7 @@
           <div style="display: flex; overflow-wrap: break-word; height: 100%; width: 100%; padding-left: 0; margin-top: 15px" class="list-group-item pull-right">
             <div style="width: 12%; text-align: center">
               <img style="width: 70%" src="{{ posterImg }}" onerror="this.src='/images/profile.png'">
-              <a style="display: block; width: 100%; padding-top: 5px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" href="/user/{{ thread.posterUsername }}">
+              <a style="display: block; width: 100%; padding-top: 5px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" href="/user/{{ posterUsername }}">
                 {{#posterIsAdmin}}
                   <span style="color: #e84d30" title="Admin" data-toggle="tooltip" data-placement="right">{{ posterUsername }}</span>
                 {{/posterIsAdmin}}
