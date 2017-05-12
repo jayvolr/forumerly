@@ -6,7 +6,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
-const secrets = require('./secrets')
 const passport = require('passport')
 const moment = require('moment-timezone')
 const flash = require('connect-flash')
@@ -26,7 +25,7 @@ app
   // Sessions and passport setup
   .use(session({
     store: new RedisStore(),
-    secret: secrets.session_secret, // So the secret isn't shown in the public repository
+    secret: process.env.session_secret, // So the secret isn't shown in the public repository
     resave: false,
     saveUninitialized: false
   }))
