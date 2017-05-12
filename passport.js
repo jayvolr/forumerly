@@ -19,7 +19,7 @@ passport.use("local-register", new LocalStrategy({
 passport.use(new GoogleStrategy({
     clientID: process.env.googleClientID,
     clientSecret: process.env.googleClientSecret,
-    callbackURL: "http://forumerly.jayvolr.me/auth/google/callback"
+    callbackURL: "https://forumerly.herokuapp.com/auth/google/callback"
   },
   function (accessToken, refreshToken, profile, done) {
     var date = new Date()

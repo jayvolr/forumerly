@@ -22,7 +22,7 @@ router
   }))
 
   // Google OAuth routes
-  .get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] })) 
+  .get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 
   .get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/register' }), (req, res) => {
       res.redirect('/')
@@ -33,9 +33,9 @@ router
     req.logout()
     // If the previous page is one of these, redirect to home
     if(req.header("Referer") === 'http://localhost:3000/other/admins'
-    || req.header("Referer") === 'http://forumerly.jayvolr.com/other/admins'
+    || req.header("Referer") === 'https://forumerly.herokuapp.com/other/admins'
     || req.header("Referer") === 'http://localhost:3000/settings'
-    || req.header("Referer") === 'http://forumerly.jayvolr.com/settings'
+    || req.header("Referer") === 'https://forumerly.herokuapp.com/settings'
     ) {
       res.redirect('/')
     // Else return to the previous page
