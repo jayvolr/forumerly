@@ -52,7 +52,7 @@ passport.use(new GoogleStrategy({
 // Called by auth.js via passport when a user attempts to login
 function authenticate(req, username, password, done) {
   mongo.db.collection("users")
-    .findOne({ lcUsername: username.toLowerCase() }, {collation: {locale: "en", strength: 2}}, (err, user) => {
+    .findOne({ lcUsername: username.toLowerCase() }, (err, user) => {
       if (err) {return done(err)}
       if (!user || !bcrypt.compareSync(password, user.password)) {
         return done(null, false, { message: 'Invalid username or password.' })
@@ -75,7 +75,7 @@ function register(req, username, password, done) {
   var date = new Date()
   // Checks if username is already in use
   mongo.db.collection('users')
-    .findOne({ lcUsername: username.toLowerCase() }, {collation: {locale: "en", strength: 2}}, (err, user) => {
+    .findOne({ lcUsername: username.toLowerCase() }, (err, user) => {
       if (err) {return done(err)}
       if (user) {
         console.log('username catch')

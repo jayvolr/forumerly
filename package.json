@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
@@ -28,7 +29,5 @@
     "passport-google-oauth20": "^1.0.0",
     "passport-local": "^1.0.0"
   },
-  "devDependencies": {
-    "pm2": "^2.4.5"
-  }
+  "devDependencies": {}
 }
