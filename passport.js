@@ -16,8 +16,6 @@ passport.use("local-register", new LocalStrategy({
 }, register))
 
 // Google OAuth 2.0 strategey
-console.log(process.env.googleClientID)
-console.log('878485820100-sorqcosr0r2vm5g6a8i9bohitcktg73a.apps.googleusercontent.com')
 passport.use(new GoogleStrategy({
     clientID: process.env.googleClientID,
     clientSecret: process.env.googleClientSecret,
