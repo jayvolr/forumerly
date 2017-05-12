@@ -1,11 +1,7 @@
 // Start file
-
-console.log('HELLO')
-
 const express = require('express')
 const bodyParser = require('body-parser')
-const session = require('express-session')
-const RedisStore = require('connect-redis')(session)
+const session = require('cookie-session')
 const passport = require('passport')
 const moment = require('moment-timezone')
 const flash = require('connect-flash')
@@ -23,25 +19,23 @@ app
   .use(bodyParser.urlencoded({extended: false}))
 
   // Sessions and passport setup
-  .use(session({
-    store: new RedisStore(),
-    secret: process.env.session_secret, // So the secret isn't shown in the public repository
-    resave: false,
-    saveUninitialized: false
-  }))
+  .use(session({ secret: process.env.session_secret, maxAge: 604800000 }))
   .use(passport.initialize())
   .use(passport.session())
   .use(flash())
-
-  // Whenever any page is loaded, set global user variable to be accessed by the view engine
   .use((req, res, next) => {
-    if (req.user) {
+
+    if (req.isAuthenticated()) {
+      app.locals.authenticated = true
       app.locals.user = req.user
+    }else {
+      app.locals.user = false
+      app.locals.authenticated = false
     }
-    app.locals.authenticated = req.isAuthenticated()
+
     next()
   })
-
+  // Routing
   .get('/', (req, res) => {
     res.render('forumHome', {user: req.user, error: req.flash('error'), success: req.flash('success')})
   })
